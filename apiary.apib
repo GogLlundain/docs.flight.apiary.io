@@ -1,0 +1,3264 @@
+HOST: http://api.flightglobaldev.rbidev.ds/
+
+--- Flightglobal API ---
+
+-- 
+
+#Alerts
+Alert Search for organisations and data
+--
+
+-- 
+/Alerts/Search
+Gets the latest fleet and organinastion data alerts ordered by Publish(ed)Date
+The list is filtered based on the user's entitlements.
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `text`: Search Term
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+* `earliestDate`: Gets alerts after this date time (inclusive)
+* `latestDate`: Gets alerts before this date time (inclusive), paging is filtered past this date
+* `OrganisationId`: Gets alerts for a specific organisation
+* `OrganisationType`: Gets Data Alerts for a Specific Organisation Type  `Airline` `Mro` `Airport`
+* `AlertTypes`: Get Alerts for specific alert types see `Delivery` `OrganisationStatusAlerts` `OrganisationFleetAlerts`
+
+**Response**
+* `AlertsSearch`
+    * `TotalResults` : Total Alerts
+    * `OrganisationFleetAlerts`: List of fleet  alerts
+        * `Total` : Total Fleet Alerts
+        * `Results`:
+	        * `Type` : The type of event - `Order`, `Delivery`
+	        * `AircraftCount` : The number of aircraft affected by the event
+	        * `EventDate`: The date and time of the event, in ISO 8601 format
+	        * `PublishedDate`: The date and time of the publishing of the event, in ISO 8601 format
+	        * `ManagerOrganisationId` : The identifier of the organisation
+	        * `ManagerOrganisationName` : The managing Organisation
+	        * `ManagerOrganisationUrl`: The Manager Organisation Url
+	        * `Builder` : The aircraft builder
+	        * `Series` : The aircraft series
+	        * `EngineType` : The engine type
+	        * `DeliveryDate`: Expected delivery date if `Type` is an `Order`
+	        * `SerialNumber`: Serial number of the aircraft, available if `Type` is `Delivery`
+	        * `RegistrationNumber`: Registration number, available if `Type` is `Delivery`
+	        * `OperatorId`: The Operator Id
+            * `OperatorName`: The Operator Name
+            * `OperatorUrl`: The operator Url
+    * `OrganisationStatusAlerts`: List of organisation status alerts
+        * `Total` : Total Organisation Status Alerts
+        * `Results`
+	        * `OrganisationId`: Unique identifier for the organisation
+	        * `OrganisationUrl` : The Organisation's primary url
+	        * `FormedDate`: Organisation formed date
+	        * `PublishedDate`: Date the alert was created
+	        * `IsEstimated`: Whether this is an estimated `FormedDate`
+	        * `OrganisationName`: Short name of the organisation
+	        * `OrganisationAlertType`: Organisation alert type can be one of: `NewStartupAnnounced`, `Ceased`, `Operating`, `Suspended`, `Merged`
+	        * `OrganisationType`: The organisation type, ie `Airline`
+	        * `OrganisationSubType`: The organisation sub type, ie `Cargo`, `Low Cost`
+	        * `ControllingOrganisationId`: Optional where `OrganisationAlertType` == `Merged` then this shows the unique identifier for the controlling organisation
+	        * `ControllingOrganisationName`: Optional where `OrganisationAlertType` == `Merged` then this shows the short name of the controlling organisation
+    * `OrganisationPersonnelAlerts`: List of organisation personnel alerts
+        * `Total` : Total personnel Alerts
+        * `Results` :
+            * `OrganisationId`: Unique identifier for the organisation
+            * `OrganisationName`: Name of the organisation
+            * `OrganisationUrl` : The Organisation's primary url
+            * `Title`: Title of the person
+            * `FirstName`: First name of the person
+            * `LastName`: Last name of the person
+            * `ActualJobTitle`: Job title of the person
+            * `EmployedFromDate`: Employed from date of the person
+            * `PublishedDate`: Date the alert was generated
+            * `PersonnelAlertType`: `PersonnelAdded`
+    * `OrganisationFinancialAlerts`: List of organisation financial alerts
+        * `Total` : Total financial Alerts
+        * `Results` :
+            * `OrganisationId`: Unique identifier for the organisation
+            * `OrganisationName`: Name of the organisation
+            * `OrganisationUrl` : The Organisation's primary url
+            * `AlertUrl` : The primary url for the alert
+            * `Year`: The Year of the financial update
+            * `Period`: `Q1` `Q2` `Q3` `Q4` `Annual`
+            * `PublishedDate`: Date the alert was generated
+
+--
+
+GET /v1/Alerts/Search{?apiToken&text=bri}&skip=0&take=10&earliestDate=2013-08-23T00:00:00&latestDate=2013-08-23T23:59:59
+< 200
+< Content-Type: application/json
+{
+    "AlertsSearch" :
+    {
+        "TotalResults" : 50,
+        "OrganisationFleetAlerts":
+        {
+            "Total": 50,
+            "Results": [
+                {
+                "ContentId": 23,            
+                "Title": "FIRM ORDER",
+                "Type": "Order",
+                "AircraftCount" : 1,             
+                "EventDate": "2013-04-25T23:00:00",
+                "PublishedDate": "2013-04-28T18:24:08.107",
+                "ManagerOrganisationId" : "-605",
+                "ManagerOrganisationName" : "Emirates",
+                "Builder" : "Airbus",
+                "Series" : "A320",
+                "EngineType" : "",
+                "Thumbnail": "https://flight-images-systest.s3.amazonaws.com/images/tailfin-logos2817.png",
+                "AltText": "Air New ZealandTailfin Logo",
+                "DeliveryDate" : "2018-01-12T23:00:00",
+                "OperatorId": null,
+                "OperatorName": null,
+                "OperatorUrl": null
+                },
+                {
+                "ContentId": 22,            
+                "Title": "50 FIRM ORDERS",
+                "Type": "Order",
+                "AircraftCount" : 50,             
+                "EventDate": "2013-04-25T23:00:00",
+                "PublishedDate": "2013-04-28T18:24:08.107",
+                "ManagerOrganisationId" : "-11455",
+                "ManagerOrganisationName" : "Aegean Airlines",
+                "Builder" : "Airbus",
+                "Series" : "A320neo",
+                "EngineType" : "PW1000G",
+                "Thumbnail": "https://flight-images-systest.s3.amazonaws.com/images/tailfin-logos2817.png",
+                "AltText": "Air New ZealandTailfin Logo",
+                "DeliveryDate" : "2018-01-12T23:00:00",
+                "OperatorId": null,
+                "OperatorName": null,
+                "OperatorUrl": null
+                },
+                {
+                "ContentId": 21,
+                "Title": "ORDER LoI",
+                "Type": "OrderLoI",
+                "AircraftCount" : 1,            
+                "EventDate": "2013-04-24T23:00:00",
+                "PublishedDate": "2013-04-27T17:30:55.843",
+                "ManagerOrganisationId" : "-456",
+                "ManagerOrganisationName" : "British Airways",
+                "Builder" : "Airbus",
+                "Series" : "A380",
+                "EngineType" : "Trent 972-84",
+                "Thumbnail": "https://flight-images-systest.s3.amazonaws.com/images/tailfin-logos2818.png",
+                "AltText": "Air FranceTailfin Logo",
+                "DeliveryDate" : "2020-01-13T23:00:00"  ,
+                "OperatorId": null,
+                "OperatorName": null,
+                "OperatorUrl": null
+                },
+                {
+                "ContentId": 20,
+                "Title": "12 ORDER LoIs",
+                "Type": "OrderLoI",
+                "AircraftCount" : 12,            
+                "EventDate": "2013-04-24T23:00:00",
+                "PublishedDate": "2013-04-27T16:29:55.843",
+                "ManagerOrganisationId" : "-109",
+                "ManagerOrganisationName" : "Adria Airways",
+                "Builder" : "Airbus",
+                "Series" : "A380",
+                "EngineType" : "Trent 972-84",
+                "Thumbnail": "https://flight-images-systest.s3.amazonaws.com/images/tailfin-logos2818.png",
+                "AltText": "Air FranceTailfin Logo",
+                "DeliveryDate" : "2020-01-13T23:00:00",
+                "OperatorId": -488,
+                "OperatorName": "Cathay Pacific",
+                "OperatorUrl": "http://dashboard.flightglobal.com/app/profiles/#/airline/summary/-488"
+                },
+    	        {
+                "ContentId": 19,
+                "Title": "OPTION PLACED",
+                "Type": "Option",
+                "AircraftCount" : 1,            
+                "EventDate": "2013-04-24T23:00:00",
+                "PublishedDate": "2013-04-27T15:30:55.843",
+                "ManagerOrganisationId" : "-456",
+                "ManagerOrganisationName" : "British Airways",
+                "Builder" : "Airbus",
+                "Series" : "A350",
+                "EngineType" : "Trent XWB",
+                "Thumbnail": "https://flight-images-systest.s3.amazonaws.com/images/tailfin-logos2818.png",
+                "AltText": "Air FranceTailfin Logo",
+                "DeliveryDate" : "2020-01-13T23:00:00",
+                "OperatorId": -488,
+                "OperatorName": "Cathay Pacific",
+                "OperatorUrl": "http://dashboard.flightglobal.com/app/profiles/#/airline/summary/-488"
+                }
+                ],
+        },
+	    "OrganisationStatusAlerts": 
+	    {
+	        "Total": 60,
+	        "Results":[
+                {
+                "OrganisationId": 1534107506,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T16:26:13.773",
+                "PublishedDate": "2013-04-18T16:26:13.807",
+                "Enrichments": [],
+                "IsEstimated": true,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "NewStartupAnnounced",
+                "OrganisationType": "Airline",
+                "OrganisationSubType": "Cargo"
+                },
+                {
+                "OrganisationId": 528533052,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T15:29:19.367",
+                "PublishedDate": "2013-04-18T15:29:19.367",
+                "Enrichments": [],
+                "IsEstimated": false,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "Ceased",
+                "OrganisationType": "Airline",
+                "OrganisationSubType": "Cargo"
+                },
+                {
+                "OrganisationId": 192316502,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T15:29:16.333",
+                "PublishedDate": "2013-04-18T15:29:16.333",
+                "Enrichments": [
+                {
+                    "TargetText": "Max Air",
+                    "Url": "http://pro.flightglobal.com/pages/profiles/airlines/summary.aspx?AirID=192316502"
+                }
+                ],
+                "IsEstimated": false,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "Operating",
+                "OrganisationType": "Airline",
+                "OrganisationSubType": "Cargo"
+                },
+                {
+                "OrganisationId": 50979755,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T15:28:59.02",
+                "PublishedDate": "2013-04-18T15:28:59.02",
+                "Enrichments": [],
+                "IsEstimated": false,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "Suspended",
+                "OrganisationType": "Airline",
+                "OrganisationSubType": "Cargo"
+                },
+                {
+                "OrganisationId": 1313949289,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T15:28:43.863",
+                "PublishedDate": "2013-04-18T15:28:43.863",
+                "Enrichments": [],
+                "IsEstimated": false,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "NewStartupAnnounced",
+                "OrganisationType": "Airline",
+                "OrganisationSubType": "Regional"
+                }
+            ]
+	    },
+ 	    "OrganisationPersonnelAlerts": {
+ 	        "Total": 600,
+ 	        "Results" :[
+                 {
+                    "OrganisationId": 123456,
+                    "OrganisationName": "British Airways",
+                    "Title": "Mr",
+                    "FirstName": "Tom",
+                    "LastName": "Jones",
+                    "ActualJobTitle": "Chief Exec Officer",
+                    "EmployedFromDate": "2013-10-30T00:00:00",
+                    "PublishedDate": "2013-10-30T00:00:00",
+                    "PersonnelAlertType" : "PersonnelAdded"
+                }
+            ]  
+ 	    },
+ 	    "OrganisationFinancialAlerts": {
+ 	        "Total": 3,
+ 	        "Results" :[
+                 {
+                    "OrganisationId": 123456,
+                    "OrganisationName": "British Airways",
+                    "OrganisationUrl": "http://dashboard.flightglobal.com",
+                    "AlertUrl": "http://pro.flightglobal.com",
+                    "Year": 2014,
+                    "Period": "Annual",
+                    "PublishedDate": "2014-10-30T00:00:00"
+                },
+                {
+                    "OrganisationId": 123457,
+                    "OrganisationName": "British Airways",
+                    "OrganisationUrl": "http://dashboard.flightglobal.com",
+                    "AlertUrl": "http://pro.flightglobal.com",
+                    "Year": 2013,
+                    "Period": "Q4",
+                    "PublishedDate": "2014-10-30T00:00:00"
+                }
+            ]  
+ 	    }
+    }
+}
+
+-- 
+/Fleet/Events
+Gets the latest fleet Event data By Aircrafts for an Organisation
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `OrganisationId`: The Id of the Organisation
+
+**Response**
+
+* `Builder`: (make) Name
+* `Designer`: Name of The Designer
+* `CurrentSupportManufacturer`: Who Currently Supports the Manufacturer
+* `DisplayManufacturer`: The manufacturer Displayed on the Aircraft
+* `Family`: e.g. 747
+* `SubFamily`: 
+* `Model`:
+* `MasterSeries`: 
+* `Series`: 
+* `Sub-Series`:
+* `DisplayMakeModelSeries`: 
+* `DisplayModelSeries`:
+* `PopularName`: 
+* `CertificationType`: 
+* `ICAO`: 
+* `Customer`: 
+* `DesignPurpose`: 
+* `Variant`: 
+* `MinorVariant`: 
+* `LineNumber`: 
+* `Registration`: 
+* `SerialNumber`: 
+* `BuildYear`:
+* `Operator`: 
+* `Manager`:
+* `Owner`: 
+* `Age`: 
+* `OperatedFor`: 
+* `Financier`: 
+* `EngineType`: 
+* `EngineVariant`: 
+* `SeatTotal`: 
+* `MTOW`: 
+* `NoiseCategory`: 
+* `EffectiveDate`:
+* `HoursCumulative`: 
+* `CyclesCumulative`: 
+* `OperatorArea`: 
+* `OperatorCountry`: 
+* `OperatorState`: 
+* `CurrentMarketValue`: 
+* `CurrentMarketLeaseRate`: 
+
+* `Events`: List of Events the Aircraft has gone through
+    * `Name`: `In Storable` `In Service` `On Order` `On Option`
+    * `Date`: The Start Date of the Event
+
+* `Enrichments`: A list of entities identified in the event text
+    * `TargetText`: The airline identified as an enrichment
+    * `Url`: Url of the airline profile page
+    
+--
+
+GET /v1/Fleet/Events?apiToken=00000000-0000-0000-0000-000000000001&OrganisationData=-456
+< 200
+< Content-Type: application/json
+{
+"Aircraft": 
+    [
+        {
+            "Builder":"Boeing",
+            "Designer":"Boeing",
+            "CurrentSupportManufacturer":"Boeing",
+            "DisplayManufacturer":"Boeing",
+            "Family":"747",
+            "Sub-Family":"LearJet 23",
+            "Model":"747",
+            "MasterSeries":"747-400",
+            "Series":"747-400ER",
+            "SubSeries":"747-400ER",
+            "DisplayMakeModelSeries":"Eurocopter EC225LP",
+            "DisplayModelSeries":"EC225LP",
+            "PopularName":"Seahawk",
+            "CertificationType":"A320-215",
+            "ICAO":"B744",
+            "Customer":"MRTT",
+            "DesignPurpose":"Passenger",
+            "Variant":"400ER (GE)",
+            "MinorVariant":"438ER",
+            "LineNumber":"942",
+            "Registration":"VH-OEH",
+            "SerialNumber":"32912",
+            "BuildYear":"1992",
+            "Operator":"EVA Air",
+            "Manager":"GECAS",
+            "Owner":"GECAS Aircraft Leasing",
+            "Age":"20",
+            "OperatedFor":"DHL Worldwide Express",
+            "Financier":"Syndicate of Various Financial Institutions",
+            "EngineType":"CF6",
+            "EngineVariant":"80C2B1F",
+            "SeatTotal":"343",
+            "MTOW":"910000",
+            "NoiseCategory":"FAA FAR Part 36",
+            "EffectiveDate":"28/02/2013",
+            "HoursCumulative":"85505",
+            "CyclesCumulative":"13865",
+            "OperatorArea":"Asia Pacific",
+            "OperatorCountry":"Taiwan",
+            "OperatorState":"Alaska",
+            "CurrentMarketValue":"39",
+            "CurrentMarketLeaseRate":"0.5",
+            "Events":[
+                        {"Name": "In Storage","Date":"09/11/2007"},
+                        {"Name": "In Service","Date":"04/05/2005"},
+                        {"Name": "On Order","Date":"01/01/2002"},
+                        {"Name": "On Order LoI","Date":"05/08/1999"},
+                        {"Name": "On Order LoI","Date":"21/02/1995"}
+                    ],  
+            "Enrichments": [
+                                { "TargetText": "Lufthansa", 
+                                  "Url": "http://pro.flightglobal.com/Pages/Profiles/Airlines/FleetSummary.aspx?AirID=-832"
+                                }
+                            ]
+        },
+        {
+            "Builder":"Airbus",
+            "Designer":"Airbus",
+            "CurrentSupportManufacturer":"Airbus",
+            "DisplayManufacturer":"Airbus",
+            "Family":"A380",
+            "SubFamily":"Something",
+            "Model":"A380",
+            "MasterSeries":"A380",
+            "Series":"A380",
+            "Sub-Series":"A380",
+            "DisplayMakeModelSeries":"Eurocopter EC225LP",
+            "DisplayModelSeries":"EC225LP",
+            "PopularName":"Seahawk",
+            "CertificationType":"A320-215",
+            "ICAO":"B744",
+            "Customer":"MRTT",
+            "DesignPurpose":"Passenger",
+            "Variant":"400ER (GE)",
+            "MinorVariant":"438ER",
+            "LineNumber":"942",
+            "Registration":"VH-OEH",
+            "SerialNumber":"32912",
+            "BuildYear":"1992",
+            "Operator":"EVA Air",
+            "Manager":"GECAS",
+            "Owner":"GECAS Aircraft Leasing",
+            "Age":"20",
+            "OperatedFor":"DHL Worldwide Express",
+            "Financier":"Syndicate of Various Financial Institutions",
+            "EngineType":"CF6",
+            "EngineVariant":"80C2B1F",
+            "SeatTotal":"343",
+            "MTOW":"910000",
+            "NoiseCategory":"FAA FAR Part 36",
+            "EffectiveDate":"01/05/2013",
+            "HoursCumulative":"85505",
+            "CyclesCumulative":"13865",
+            "OperatorArea":"Asia Pacific",
+            "OperatorCountry":"Taiwan",
+            "OperatorState":"Alaska",
+            "CurrentMarketValue":"39",
+            "CurrentMarketLeaseRate":"0.5",
+            "Events":[
+                        {"Name": "On Order","Date":"01/05/2013"},
+                        {"Name": "On Order LoI","Date":"09/08/2012"},
+                        {"Name": "On Order LoI","Date":"29/02/2009"}
+                    ],                      
+            "Enrichments": [{}                            
+                            ]
+        }
+    ]
+}
+
+
+--
+/Fleet/EventTypes
+Gets a list of event types and their descriptions
+
+**Request**
+
+* `apiToken`: The API token of the user making the request
+
+**Response**
+
+* `Id`: The unique identifier of the event type
+* `Name`: The name of the event type
+* `IsAuthorised`: Whether the user is entitled to this event type
+
+--
+
+GET /v1/Fleet/EventTypes?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+"EventTypes": [
+{
+"Id": 1,
+"Name": "Firm Order",
+"IsAuthorised": false
+},
+{
+"Id": 2,
+"Name": "Order Loi",
+"IsAuthorised": false
+},
+{
+"Id": 3,
+"Name": "Option to order",
+"IsAuthorised": false
+},
+{
+"Id": 4,
+"Name": "Option LoI to order",
+"IsAuthorised": false
+},
+{
+"Id": 5,
+"Name": "Order LOI to order",
+"IsAuthorised": false
+}
+]
+}
+
+
+-- 
+/Fleet/Manufacturers
+Returns a list of manufacturers which match the partial `keyword`.
+
+**Request**
+
+* `keyword`: The full or partial name or ICAO/IATA code of the manufacturer. 
+
+**Response**
+
+* `SearchTest`: The text used when matching the `keyword`
+* `Name`: The organisation name
+* `OrganisationID`: The unique ID for the organisation
+
+--
+
+GET /v1/Fleet/Manufacturers?keyword=BA
+< 200
+< Content-Type: application/json
+{
+    "autoComplete":
+    [
+        {
+            "SearchText":"British Airways [BA],[BAW]",
+            "Name":"British Airways",
+            "OrganisationId":"-456"
+        }
+    ] 
+}
+
+
+
+--
+/Fleet/OrganisationTypes
+Returns a list of Organisational types for fleet developments.
+
+**Response**
+
+* `OrganisationTypeId`: The organisation type id
+* `OrganisationTypeName`: The organisation type name
+* `ParentOrganisationTypeName`: The parent organisation type name
+
+--
+
+GET /v1/Fleet/OrganisationTypes?publicToken=bcc39649-0000-0000-0000-1eab50a4c459
+< 200
+< Content-Type: application/json
+{
+    "FleetDevelopmentOrganisationTypes": [
+        {
+            "OrganisationTypeId": 38,
+            "OrganisationTypeName": "Cargo",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 35,
+            "OrganisationTypeName": "Leisure",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 37,
+            "OrganisationTypeName": "Low cost",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 34,
+            "OrganisationTypeName": "Mainline",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 79,
+            "OrganisationTypeName": "Military",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 80,
+            "OrganisationTypeName": "Other",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 36,
+            "OrganisationTypeName": "Regional",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 88,
+            "OrganisationTypeName": "Operating Lessor",
+            "ParentOrganisationTypeName": "Finance & Professional"
+        }
+    ]
+}
+
+
+-- 
+
+#ORGANISATION
+Organisation alerts and related data
+--
+
+
+
+-- 
+/Organisation/AlertCategories
+Gets the Organisation Categories for organisation alerts
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+
+**Response**
+
+* `OrganisationTypeId`: The organisation type id
+* `OrganisationTypeName`: The organisation type name
+* `ParentOrganisationTypeName`: The parent organisation type name
+
+    
+--
+
+GET /v1/Organisation/AlertCategories?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+    "OrganisationAlertCategories": [
+        {
+            "OrganisationTypeId": 38,
+            "OrganisationTypeName": "Cargo",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 35,
+            "OrganisationTypeName": "Leisure",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 37,
+            "OrganisationTypeName": "Low cost",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 34,
+            "OrganisationTypeName": "Mainline",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 79,
+            "OrganisationTypeName": "Military",
+            "ParentOrganisationTypeName": "Airlines"
+        },
+        {
+            "OrganisationTypeId": 80,
+            "OrganisationTypeName": "Other",
+            "ParentOrganisationTypeName": "Airlines"
+        }
+    ]
+}
+
+
+-- 
+/Organisation/Search
+Search for organisations
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+* `text`: Search Term
+* `sortField`: `Name` `Type` `Country` `Region`
+* `sortDiection`: `Asc` `Desc`
+* `OrganisationType`: `Mro` `Airline` `Airport`
+* `Regions` : `1,2` See `/Geomrography/Regions` for Regions
+* `Countries` : `292,303` See `/Geography/Regions` for Countries
+* `hideInactive`: `true` to show only active organisations
+* `Statuses`: A list of organisation Statuses see `organistion/statuses` for the list
+ 
+**Response**
+
+* `OrganisationId`: Unique identifier for the organisation
+* `OrganisationUrl`: The URL for the organisation summary page
+* `Name`: Title of the alert
+* `Type`: Organisation Type `Airport` `Airline` `Mro`
+* `Country`: Organisation's Country
+* `Region`: Organisation's Region
+* `Status` : Organisation's Current Status e.g. `Operating`
+ 
+--
+
+GET /v1/Organisation/Search?apiToken=00000000-0000-0000-0000-000000000001&skip=0&take=10&text=bri
+< 200
+< Content-Type: application/json
+{
+    "OrganisationSearch": {
+        "Total": 78,
+        "Results":[
+        {
+            "OrganisationId": -456,
+			"OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airline/summary/-456",
+            "OrganisationUrl": 
+            "Name": "British Airways",
+            "Type": "Airline",
+            "Country": "United Kingdom",
+            "Region": "Europe",
+            "Status": "Starting"
+        },
+        {
+            "OrganisationId": -2180,
+			"OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/mro/summary/-2180",
+            "Name": "British Airways Enginerring",
+            "Type": "Mro",
+            "Country": "United Kingdom",
+            "Region": "Europe",
+            "Status": "Suspended"
+        },
+        {
+            "OrganisationId": -21527,
+			"OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airline/summary/-21527",
+            "Name": "Virgin America",
+            "Type": "Airline",
+            "Country": "United Kingdom",
+            "Region": "Europe",
+            "Status": "Starting"
+        }
+        ,{
+            "OrganisationId": -13001,
+			"OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airport/summary/-13001",
+            "Name": "Heathrow",
+            "Type": "Airport",
+            "Country": "United Kingdom",
+            "Region": "Europe",
+            "Status": "Starting"
+        }
+    ]
+}
+}
+
+--
+/Organisation/Statuses
+Returns A list of Organisation Statusses
+
+**Request**
+
+**Response**
+
+* `OrganisationStatuses`
+    * `Statuses`
+        * `Name`: Organisation's Status Name e.g. `Operating`
+--
+
+GET /v1/Organisation/Statuses
+< 200
+< Content-Type: application/json
+{
+    "OrganisationStatuses": {
+        "Statuses": [
+            {
+                "Name": "Start Up"
+            },
+            {
+                "Name": "Operating"
+            }
+        ]
+    }
+}
+
+-- 
+
+#ARTICLES
+Articles search and related search
+--
+
+
+
+-- 
+/Articles/Search
+Gets a list of news items with their article pages
+
+**Request**
+
+* `apiToken`: The API token of the current user
+* `skip`: For paging. The number of items to skip
+* `take`: For paging. The size of the page
+* `earliestDate`: Gets articles after this date time (inclusive)
+* `latestDate`: Gets articles before this date time (inclusive) 
+* `keywords`: Comma separated keywords to search on
+* `titleOnly`: Restricts the keyword search to the title of the articles, not the whole body
+* `organisations`: Comma separated organisation ids to search on (-456 or -605)
+* `categories`: -- SEE Articles/Categories for The Category Id's to send 
+* `types`: Article Types `Lead` `Analysis`
+
+
+**Response**
+
+A list of news items
+
+* `TotalResults`: Total number of items
+* `Id`: Unique ID of the news item being returned
+* `Title`: Title of the news item
+* `Intro`: Intro blurb for the news item
+* `Subscription`: Which Flightglobal subscription this news item is visible to. Values are `Pro`, `Registered` or `Free Content`
+* `PublicationDate`: ISO 8601 formatted datetime of the article's published date
+* `Thumbnail`: URL of the thumbnail, if available
+* `leadSections` : What Section the Article Is Lead In
+* `PrimaryOrganisation`
+    *`OrganisationID`
+    *`TailfinLogo` The Full Location to the TailfinLogo
+    *`IATACode` The Organisations' IATA Code
+    *`Type` The Organisation Type
+
+--
+General search to get the latest articles
+GET /v1/Articles/Search{?apiToken,skip,take}
+< 200
+< Content-Type: application/json
+{
+    "TotalResults": 2156,
+    "News": [
+        {
+            "Id": 380346,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "(BASIC) VVIP role being mooted for Singapore Airlines A340-500s",
+            "Intro": "Airbus is in talks with potential customers in the Middle East about offering the Singapore Airlines Airbus A340-500s that it is buying back as reconfigured VVIP aircraft.",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-12-21T08:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=49031",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 385530,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "Working Week: Aws Al Khanjari",
+            "Intro": "Aws Al Khanjari has been the general manager of Abu Dhabi's Gulf Centre for Aviation Studies since January, joining GCAS after a long career in various parts...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-06-17T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386241,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "IN FOCUS: Eurocopter's new super-medium EC175 tested",
+            "Intro": "",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-06-03T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": null
+        },
+        {
+            "Id": 386240,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "IN FOCUS: EC175 programme update",
+            "Intro": "Depending on whether you're talking to Eurocopter or to someone outside the company, the backlog for the EC175 is either suitably robust or a little on the...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-06-03T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": null,
+                "TailfinLogo": null,
+                "IATACode": null,
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386239,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "IN FOCUS: Search and rescue deal still to come for EC175",
+            "Intro": "One major disappointment for Eurocopter was the failure of the EC175 to be selected by any of the bidders for the UK's search and rescue requirement. This...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-06-03T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 385605,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "IATA: Africa commits to improve safety performance",
+            "Intro": "Africa has committed to deliver radically improved airline safety performance by the end of 2015, which does not give its transport ministers much time for...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-06-01T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386087,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "IN FOCUS: USAF weighs up post-F15E fighter options",
+            "Intro": "As budgets continue to fall, for how long can the US Air Force rely on a combination of F-35s, Long Range Strike-Bombers and modified F-15Es to put off the need for a sixth-generation replacement fighter?",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-05-27T23:00:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386255,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "RQ-21 Integrator declared ready for low-rate production",
+            "Intro": "The Insitu RQ-21 Integrator small tactical unmanned air system (STUAS) has been cleared to enter low rate initial production (LRIP) by the US Navy, one more...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-05-22T15:23:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=43990",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386253,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "US Airways launches $100m subordinate EETC",
+            "Intro": "US Airways launched a $100 million deeply subordinate enhanced equipment trust certificate (EETC) issue today, adding to the $2.1 billion in financing that...",
+            "Subscription": "Pro",
+            "PublicationDate": "2013-05-22T15:16:44",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        },
+        {
+            "Id": 386233,
+            "LeadSections": [
+                "News Homepage/Lead Article",
+                "News Channel/Lead Article",
+                "News Sub-Channel/Lead Article"
+            ],
+            "Title": "EBACE: Pilatus selects ACC to provide cooling and heating systerm for PC-24 twinjet",
+            "Intro": "Pilatus [stand 7031] has selected Air Comm to provide a suite of major components for the environmental cooling and heating system on the PC-24 twinjet -...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2013-05-22T15:15:00",
+            "Thumbnail": "http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50648",
+            "PrimaryOrganisation": {
+                "OrganisationId": -456,
+                "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+                "IATACode": "BA",
+                "Type": "Airline"
+            }
+        }
+    ]
+}
+
+Search for articles by keyword
+GET /v1/Articles/Search{?apiToken,skip,take}&keywords=Paris+Air+Show,French
+< 200
+< Content-Type: application/json
+{"TotalResults": 2156, "News":[{"Id":385530,"PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"},"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"(PARIS AIR SHOW) Working Week: Aws Al Khanjari","Intro":"Aws Al Khanjari has been the general manager of Abu Dhabi's Gulf Centre for Aviation Studies since January, joining GCAS after a long career in various parts...","Subscription":"Free Content","PublicationDate":"2013-06-17T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386241,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Eurocopter's new super-medium EC175 tested","Intro":"","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386240,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: EC175 programme update","Intro":"Depending on whether you're talking to Eurocopter or to someone outside the company, the backlog for the EC175 is either suitably robust or a little on the...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386239,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Search and rescue deal still to come for EC175","Intro":"One major disappointment for Eurocopter was the failure of the EC175 to be selected by any of the bidders for the UK's search and rescue requirement. This...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":385605,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IATA: Africa commits to improve safety performance","Intro":"Africa has committed to deliver radically improved airline safety performance by the end of 2015, which does not give its transport ministers much time for...","Subscription":"Free Content","PublicationDate":"2013-06-01T23:00:00","Categories":["Airlines","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386087,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: USAF weighs up post-F15E fighter options","Intro":"As budgets continue to fall, for how long can the US Air Force rely on a combination of F-35s, Long Range Strike-Bombers and modified F-15Es to put off the need for a sixth-generation replacement fighter?","Subscription":"Free Content","PublicationDate":"2013-05-27T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386255,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"RQ-21 Integrator declared ready for low-rate production","Intro":"The Insitu RQ-21 Integrator small tactical unmanned air system (STUAS) has been cleared to enter low rate initial production (LRIP) by the US Navy, one more...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:23:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=43990","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386253,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"US Airways launches $100m subordinate EETC","Intro":"US Airways launched a $100 million deeply subordinate enhanced equipment trust certificate (EETC) issue today, adding to the $2.1 billion in financing that...","Subscription":"Pro","PublicationDate":"2013-05-22T15:16:44","Categories":["Finance","Airlines","Aircraft","Airports","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386233,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Pilatus selects ACC to provide cooling and heating systerm for PC-24 twinjet","Intro":"Pilatus [stand 7031] has selected Air Comm to provide a suite of major components for the environmental cooling and heating system on the PC-24 twinjet -...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:15:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50648","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386252,"Title":"SkyWest to seek lease financing for E-175s, eyes additional contracts","Intro":"SkyWest Inc hopes to lease finance the 100 Embraer 175s that it ordered on 21 May, says chief financial officer Mike Kraupp. \"We prefer to lease finance,...","Subscription":"Pro","PublicationDate":"2013-05-22T15:11:39","Categories":["Maintenance","Airlines","Aircraft","Airports","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}}]}
+
+Search for articles by keyword and title only
+GET /v1/Articles/Search{?apiToken,skip,take,titleOnly}&keywords=Paris+Air+Show
+< 200
+< Content-Type: application/json
+{"TotalResults": 2156, "News":[{"Id":385530,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"(Title Only) (PARIS AIR SHOW) Working Week: Aws Al Khanjari","Intro":"Aws Al Khanjari has been the general manager of Abu Dhabi's Gulf Centre for Aviation Studies since January, joining GCAS after a long career in various parts...","Subscription":"Free Content","PublicationDate":"2013-06-17T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386241,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Eurocopter's new super-medium EC175 tested","Intro":"","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386240,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: EC175 programme update","Intro":"Depending on whether you're talking to Eurocopter or to someone outside the company, the backlog for the EC175 is either suitably robust or a little on the...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386239,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Search and rescue deal still to come for EC175","Intro":"One major disappointment for Eurocopter was the failure of the EC175 to be selected by any of the bidders for the UK's search and rescue requirement. This...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":385605,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IATA: Africa commits to improve safety performance","Intro":"Africa has committed to deliver radically improved airline safety performance by the end of 2015, which does not give its transport ministers much time for...","Subscription":"Free Content","PublicationDate":"2013-06-01T23:00:00","Categories":["Airlines","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386087,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: USAF weighs up post-F15E fighter options","Intro":"As budgets continue to fall, for how long can the US Air Force rely on a combination of F-35s, Long Range Strike-Bombers and modified F-15Es to put off the need for a sixth-generation replacement fighter?","Subscription":"Free Content","PublicationDate":"2013-05-27T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386255,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"RQ-21 Integrator declared ready for low-rate production","Intro":"The Insitu RQ-21 Integrator small tactical unmanned air system (STUAS) has been cleared to enter low rate initial production (LRIP) by the US Navy, one more...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:23:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=43990"},{"Id":386253,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"US Airways launches $100m subordinate EETC","Intro":"US Airways launched a $100 million deeply subordinate enhanced equipment trust certificate (EETC) issue today, adding to the $2.1 billion in financing that...","Subscription":"Pro","PublicationDate":"2013-05-22T15:16:44","Categories":["Finance","Airlines","Aircraft","Airports","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386233,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Pilatus selects ACC to provide cooling and heating systerm for PC-24 twinjet","Intro":"Pilatus [stand 7031] has selected Air Comm to provide a suite of major components for the environmental cooling and heating system on the PC-24 twinjet -...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:15:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50648"},{"Id":386252,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"SkyWest to seek lease financing for E-175s, eyes additional contracts","Intro":"SkyWest Inc hopes to lease finance the 100 Embraer 175s that it ordered on 21 May, says chief financial officer Mike Kraupp. \"We prefer to lease finance,...","Subscription":"Pro","PublicationDate":"2013-05-22T15:11:39","Categories":["Maintenance","Airlines","Aircraft","Airports","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}}]}
+
+Search for articles by keyword
+GET /v1/Articles/Search{?apiToken,skip,take}&keywords=Boeing+787,Dreamliner,Faulty+Battery
+< 200
+< Content-Type: application/json
+{"TotalResults": 2156, "News":[{"Id":386241,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"(Dreamliner) IN FOCUS: Eurocopter's new super-medium EC175 tested","Intro":"","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386243,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"ANALYSIS: United network at regional junction","Intro":"United Airlines is on the brink of major changes. It will begin reducing the number of 50-seat regional aircraft in exchange for 76-seat aircraft beginning...","Subscription":"Pro","PublicationDate":"2013-05-22T13:39:00","Categories":["Maintenance","Airlines","Aircraft","Airports","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386218,"Title":"ANALYSIS: Jet Airways may refleet low-cost unit amid competitive market","Intro":"India's Jet Airways made headlines recently when news leaked of an apparent order for 100-200 aircraft, including the Boeing 737 Max, 777-300ER and Airbus...","Subscription":"Pro","PublicationDate":"2013-05-22T09:02:00","Categories":["Maintenance","Airlines","Aircraft","Airports","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386206,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"China Southern to become first Chinese 787 operator by early June","Intro":"China Southern Airlines is expecting to take delivery of its first Boeing 787-8 by early June, making it the first Chinese operator of the type. The...","Subscription":"Free Content","PublicationDate":"2013-05-22T03:26:00","Categories":["Airlines","Maintenance","Finance","Aircraft","Airports"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50662"},{"Id":386203,"Title":"ANALYSIS: SkyWest E-175 order pushes United 50-seat RJ drawdown","Intro":"United Airlines has set the stage for its regional fleet restructuring with orders for at least 70 76-seat jets, as it moves forward with plans to reduce...","Subscription":"Pro","PublicationDate":"2013-05-21T21:10:00","Categories":["Maintenance","Airlines","Aircraft","Airports","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386195,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"United sees no imminent need for long-range 757 replacement","Intro":"United Airlines can wait before it must make a decision on a replacement for its long-range Boeing 757-200 fleet, says the carrier's vice-president of fleet...","Subscription":"Pro","PublicationDate":"2013-05-21T18:27:15","Categories":["Airlines","Aircraft","Airports","Finance","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386139,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Eurocopter launches VIP-roled EC175","Intro":"Eurocopter [stand 7050] today launched a VIP-roled variant of its developmental EC175 super-medium helicopter at EBACE. Due for certification in the...","Subscription":"Free Content","PublicationDate":"2013-05-21T10:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50643"},{"Id":386131,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"ANALYSIS: Asia-Pacific set for Dreamliner deluge","Intro":"The Asia-Pacific's Boeing 787 operators are emerging, finally, from the long dark tunnel of the Dreamliner crisis, and can look forward to a rush of deliveries...","Subscription":"Pro","PublicationDate":"2013-05-21T08:25:00","Categories":["Airlines","Aircraft","Airports","Maintenance","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386115,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"United enthusiastic about planned 787-10X","Intro":"United Airlines considers the planned Boeing 787-10X a \"great airplane\", says vice-president of fleet Ron Baur. \"The 787-10 is a great airplane,\" he...","Subscription":"Pro","PublicationDate":"2013-05-20T21:29:56","Categories":["Airlines","Aircraft","Airports","Maintenance","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386114,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"United returns 787s to revenue service","Intro":"United Airlines resumed revenue flights on its fleet of Boeing 787-8 aircraft today, a little more than a month since the US Federal Aviation Administration...","Subscription":"Free Content","PublicationDate":"2013-05-20T20:12:00","Categories":["Airlines","Aircraft","Airports","Maintenance","Finance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=47003","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}}]}
+
+Search for articles by keyword
+GET /v1/Articles/Search{?apiToken,skip,take}&keywords=UK,British
+< 200
+< Content-Type: application/json
+{"TotalResults": 2156, "News":[{"Id":386239,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"(UK) IN FOCUS: Search and rescue deal still to come for EC175","Intro":"One major disappointment for Eurocopter was the failure of the EC175 to be selected by any of the bidders for the UK's search and rescue requirement. This...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}},{"Id":386158,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Gama gets Beechcraft service authorisation","Intro":"Farnborough, UK-based Gama Support Services has been appointed a Beechcraft authorised service centre, providing maintenance for King Air, Baron and Bonanza...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386196,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Eclipse Aerospace makes show debut","Intro":"Eclipse Aerospace is making its EBACE debut and is represented at the show by its exclusive European distributor Aeris Aviation. The UK-based company...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386189,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: SaxonAir takes delivery of Beechcraft Baron G58","Intro":"UK business aircraft services provider SaxonAir became the official owner of its first Beechcraft Baron G58 at the show, following the handover yesterday...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386161,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Hanger8 game for African expansion","Intro":"Charter operator Hangar8 [stand 6] earned its stripes by unveiling a zebra-pattern Bombardier Global Express jet at EBACE. The distinctive paint job highlights...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386213,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: AgustaWestland pushes VIP-roled AW169","Intro":"AgustaWestland believes its light twin-engined AW169 can grab a sizeable share of the VIP and corporate transport market as the type advances towards planned...","Subscription":"Free Content","PublicationDate":"2013-05-22T08:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50666"},{"Id":386190,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"ANALYSIS: Why low-cost carriers are looking towards GDSs","Intro":"Defining a low-cost carrier is almost an industry in itself. IATA has a list of twelve characteristics, but admits \"that there is no standard business model...","Subscription":"Pro","PublicationDate":"2013-05-21T17:27:09","Categories":["Airlines","Aircraft","Airports","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386185,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"Ryanair to bid for Flybe slots at Gatwick","Intro":"Ryanair is to bid for London Gatwick slots being sold by Flybe. Confirming the Irish budget carrier's intention, deputy chief Howard Millar says: \"I...","Subscription":"Pro","PublicationDate":"2013-05-21T16:55:17","Categories":["Finance","Airlines","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386178,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"RAF Voyager launches tanker operations with Tornado","Intro":"A UK Royal Air Force crew has flown the first air-to-air refuelling (AAR) training flight with the service's new A330 Voyager tanker/transport, just four...","Subscription":"Free Content","PublicationDate":"2013-05-21T15:50:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50319"},"PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"},{"Id":386095,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: AirClub welcomes London Executive Aviation as first UK member","Intro":"The world's only corporate aircraft alliance AirClub announced at the show this morning that London Executive Aviation (LEA) has become the first UK-based member and the ninth associate of the pan-European charter grouping.","Subscription":"Free Content","PublicationDate":"2013-05-21T15:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0","PrimaryOrganisation": {"OrganisationId": -456, "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png", "IATACode": "BA","Type": "Airline"}}]}
+
+Search for articles by organisation names
+GET /v1/Articles/Search{?apiToken,skip,take,organisations}
+< 200
+< Content-Type: application/json
+{"TotalResults": 2156, "News":[{"Id":380346,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"(Followed) VVIP role being mooted for Singapore Airlines A340-500s","Intro":"Airbus is in talks with potential customers in the Middle East about offering the Singapore Airlines Airbus A340-500s that it is buying back as reconfigured VVIP aircraft.","Subscription":"Free Content","PublicationDate":"2013-12-21T08:00:00","Categories":["Airlines","Maintenance","Finance","Aircraft","Airports"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=49031"},{"Id":385530,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"Working Week: Aws Al Khanjari","Intro":"Aws Al Khanjari has been the general manager of Abu Dhabi's Gulf Centre for Aviation Studies since January, joining GCAS after a long career in various parts...","Subscription":"Free Content","PublicationDate":"2013-06-17T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386241,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Eurocopter's new super-medium EC175 tested","Intro":"","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386240,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: EC175 programme update","Intro":"Depending on whether you're talking to Eurocopter or to someone outside the company, the backlog for the EC175 is either suitably robust or a little on the...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386239,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: Search and rescue deal still to come for EC175","Intro":"One major disappointment for Eurocopter was the failure of the EC175 to be selected by any of the bidders for the UK's search and rescue requirement. This...","Subscription":"Free Content","PublicationDate":"2013-06-03T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":385605,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IATA: Africa commits to improve safety performance","Intro":"Africa has committed to deliver radically improved airline safety performance by the end of 2015, which does not give its transport ministers much time for...","Subscription":"Free Content","PublicationDate":"2013-06-01T23:00:00","Categories":["Airlines","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386087,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"IN FOCUS: USAF weighs up post-F15E fighter options","Intro":"As budgets continue to fall, for how long can the US Air Force rely on a combination of F-35s, Long Range Strike-Bombers and modified F-15Es to put off the need for a sixth-generation replacement fighter?","Subscription":"Free Content","PublicationDate":"2013-05-27T23:00:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386255,"Title":"RQ-21 Integrator declared ready for low-rate production","Intro":"The Insitu RQ-21 Integrator small tactical unmanned air system (STUAS) has been cleared to enter low rate initial production (LRIP) by the US Navy, one more...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:23:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=43990"},{"Id":386253,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"US Airways launches $100m subordinate EETC","Intro":"US Airways launched a $100 million deeply subordinate enhanced equipment trust certificate (EETC) issue today, adding to the $2.1 billion in financing that...","Subscription":"Pro","PublicationDate":"2013-05-22T15:16:44","Categories":["Finance","Airlines","Aircraft","Airports","Maintenance"],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=0"},{"Id":386233,"LeadSections": ["News Homepage/Lead Article","News Channel/Lead Article","News Sub-Channel/Lead Article"],"Title":"EBACE: Pilatus selects ACC to provide cooling and heating systerm for PC-24 twinjet","Intro":"Pilatus [stand 7031] has selected Air Comm to provide a suite of major components for the environmental cooling and heating system on the PC-24 twinjet -...","Subscription":"Free Content","PublicationDate":"2013-05-22T15:15:00","Categories":[],"Thumbnail":"http://www.flightglobal.com/Assets/GetAsset.aspx?ItemID=50648"}]}
+
+
+
+--
+/Articles/Detail
+Returns an article's contents
+
+**Request**
+
+* `id`: The ID of the article to return
+
+**Response**
+
+* `Id`: The ID of the article
+* `Subscription`: Which Flightglobal subscription this news item is visible to. Values are `Pro`, `Registered` or `Free Content`
+* `PublicationDate`: ISO 8601 formatted datetime of the article's published date
+* `Title`: The article title
+* `Text`: The body of the article
+* `ReporterName`: Author's name (may be blank)
+* `ReporterImage` : Author's avatar (may be blank)
+* `PublishedLocation`: Where the article was written (may be blank)
+* `Tags` : Tags associated with the article
+* `PrimaryOrganisation`
+    *`OrganisationID`
+    *`TailfinLogo` The Full Location to the TailfinLogo
+    *`IATACode` The Organisations' IATA Code
+    *`Type` The Organisation Type
+
+--
+
+If apiToken is not supplied, expect an error return code
+GET /v1/Articles/Detail
+< 404
+
+
+GET /v1/Articles/Detail{?apitoken,id}
+< 200
+< Content-Type: application/json
+{
+    "ID": 362234,
+    "Subscription": "Pro",
+    "PublicationDate": "2011-09-19T13:16:25.147Z",
+    "Title": "DHL buys Lufthansa Cargo share in special freight JV",
+    "Text": "<p>DHL Global Forwarding has taken over full ownership of LifeConEx, its specialist venture with Lufthansa Cargo for temperature-controlled shipments.</p><p>The Deutsche Post DHL Group subsidiary has acquired the 50% shareholding from the cargo airline, with which it founded the logistics business in 2005. </p><p>Financial details of the transaction have not been disclosed. </p><p>LifeConEx organises the transport of temperature-sensitive goods, especially for companies in the health, pharmaceutical and biotechnology sectors, through a network of different cargo carriers, forwarders, ground handlers, packaging companies and data loggers. </p><p>Both shareholders agreed that \"a change in ownership would best prepare LifeConEx to further grow its market position\", said DHL Global Forwarding chief executive Roger Crook.</p><p>The logistics company plans to expand the \"cold chain services\" and its co-operation with Lufthansa Cargo while \"maintaining neutrality\" towards its transport partners. </p><p>Despite the buy-out, the cargo airline wants to grow its business for temperature-controlled shipments and \"develop its international pharma hubs\", according to Lufthansa Cargo board member Andreas Otto.</p><p>LifeConEx chief executive David Bang will continue to lead the business after the ownership change. </p>",
+    "ReporterName": "Michael Gubisch",
+    "ReporterImage": null,
+    "PublishedLocation": "London",
+    "Tags": [
+        "Lufthansa Cargo,DHL"
+    ],
+    "PrimaryOrganisation": {
+            "Id": -112,
+            "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2982.png",
+            "IATACode": "EI",
+            "Type": "Airline"
+        }
+}
+
+--
+/Articles/Related
+Returns an article's related articles
+
+**Request**
+
+* `id`: The ID of the main article
+
+**Response**
+
+* `ID`: The ID of the article
+* `RelatedArticles`: List of related articles
+    * `ID`: The ID of the article
+    * `Subscription`: Which Flightglobal subscription this news item is visible to. Values are `Pro`, `Registered` or `Free Content`
+    * `PublicationDate`: ISO 8601 formatted datetime of the article's published date
+    * `Title`: The article title
+    * `Intro`: The intro of the article
+    * `Tags` : Tags associated with the article
+
+--
+
+If apiToken is not supplied, expect an error return code
+GET /v1/Articles/Related{?id}
+< 404
+
+
+GET /v1/Articles/Related{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "Id": 362234,
+    "RelatedArticles": [
+        {
+            "Tags": [],
+            "Id": 365637,
+            "Title": "Lufthansa Cargo opens new cold storage facility in Frankfurt",
+            "Intro": "Lufthansa Cargo has opened a cold store in Frankfurt for temperature-sensitive cargo. The 4,500m (48,400ft ) facility is equipped with four storage...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-12-06T14:20:26.027"
+        },
+        {
+            "Tags": [
+                "Lufthansa",
+                "Swiss",
+                "Germanwings",
+                "BMI"
+            ],
+            "Id": 363334,
+            "Title": "Lufthansa Group sees loads drop in September",
+            "Intro": "Lufthansa Group has recorded a 4.6% year-on-year increase in traffic for September on an 8% growth in capacity, leading to a 2.5 percentage point decline...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-10-12T13:48:05.837"
+        },
+        {
+            "Tags": [
+                "DHL Express"
+            ],
+            "Id": 362369,
+            "Title": "DHL breaks ground on new Leipzig distribution centre",
+            "Intro": "DHL has broken ground on a 15,000m (162,000ft ) multi-user distribution centre at its Leipzig/Halle hub, which will become operational in May 2012. DHL...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-09-21T14:24:38.65"
+        },
+        {
+            "Tags": [],
+            "Id": 362149,
+            "Title": "Aerolease places 757 Freighters with DHL",
+            "Intro": "Aerolease International has placed a pair of Boeing 757-200PCF aircraft on operating lease with DHL International. The first aircraft, MSN 22211, was...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-09-16T14:30:00"
+        },
+        {
+            "Tags": [
+                "Atlas"
+            ],
+            "Id": 361769,
+            "Title": "Atlas to operate five DHL-owned 767s",
+            "Intro": "Atlas Air Worldwide Holdings has forged a new agreement with DHL to operate five Boeing 767 freighters owned by DHL in its North American network beginning...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-09-08T13:54:01.667"
+        },
+        {
+            "Tags": [
+                "southern air"
+            ],
+            "Id": 361738,
+            "Title": "Southern Air to operate three 777Fs for DHL Express",
+            "Intro": "Cargo carrier Southern Air has signed a deal with DHL to operate three Boeing 777 freighters on behalf of DHL Express. The first 777F began service...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-09-07T23:07:12.443"
+        },
+        {
+            "Tags": [],
+            "Id": 358637,
+            "Title": "DHL acquires three 747-400BCF for $162m",
+            "Intro": "DHL Express (DHL) has acquired three Boeing 747-400BCF for 100 million ($162 million), in a move to expand its Asian network. The three freighters...",
+            "Subscription": "Pro",
+            "PublicationDate": "2011-06-22T13:04:00"
+        },
+        {
+            "Tags": [],
+            "Id": 356927,
+            "Title": "Lufthansa firms up order for five 777 freighters",
+            "Intro": "Lufthansa has firmed up its agreement with Boeing for five 777 freighters but will not make a decision on whether the aircraft will operate for its Lufthansa...",
+            "Subscription": "Free Content",
+            "PublicationDate": "2011-05-19T12:34:00"
+        }
+    ]
+}
+
+--
+/Articles/PreviousNext
+Returns an article's previous and next articles
+
+**Request**
+
+* `id`: The ID of the article to return
+
+**Response**
+
+* `Id`: The ID of the article
+* `PreviousArticle`: 
+    * `Id`: The Id of the article
+    * `Subscription`: Which Flightglobal subscription this news item is visible to. Values are `Pro`, `Registered` or `Free Content`
+    * `PublicationDate`: ISO 8601 formatted datetime of the article's published date
+    * `Title`: The article title
+    * `Intro`: The intro of the article
+    * `Tags` : Tags associated with the article
+
+--
+
+If apiToken is not supplied, expect an error return code
+GET /v1/Articles/PreviousNext{?id}
+< 404
+
+
+GET /v1/Articles/PreviousNext{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "Id": 362234,
+    "PreviousArticle": {
+        "Tags": [],
+        "Id": 362233,
+        "Title": "More teams make shortlist for UK's Project Marshall",
+        "Intro": "Two more teams have been confirmed as joining BAE in the final phase of the UK Ministry of Defence's Project Marshall air traffic management contest ...",
+        "Subscription": "Free Content",
+        "PublicationDate": "2011-09-19T14:50:00"
+    },
+    "NextArticle": {
+        "Tags": [
+            "Singapore Airlines",
+            "Singapore Changi",
+            "New York JFK",
+            "Frankfurt"
+        ],
+        "Id": 362235,
+        "Title": "SIA to deploy A380 on Singapore-Frankfurt-New York route",
+        "Intro": "Singapore Airlines (SIA) will deploy the Airbus A380 on its daily Singapore-New York, via Frankfurt, route from 15 January 2012. The carrier said that...",
+        "Subscription": "Pro",
+        "PublicationDate": "2011-09-19T14:30:07.01"
+    }
+}
+
+--
+/Articles/Categories
+Returns an article's previous and next articles
+
+**Request**
+
+
+**Response**
+
+* `CategoryId`: The Id of the Category
+* `Name`: The Name of the Category
+* `ChildCategories`: 
+    * `CategoryId`: The Child's Category Id
+    * `Name`: The Name of the Child Category
+
+--
+GET /v1/Articles/Categories
+< 200
+< Content-Type: application/json
+{
+    "Categories": [
+        {
+            "ChildCategories": [
+                                {
+                                    "CategoryId": 12161,
+                                    "Name": "Ops & safety"
+                                },
+                                {
+                                    "CategoryId": 12162,
+                                    "Name": "Finance"
+                                }
+                            ]
+        }
+    ]
+}
+
+
+-- 
+
+#AIRLINES 
+Airlines summaries and various information
+--
+
+
+--
+/Airlines/Summary
+Returns a short summary of an airline
+
+**Request**
+
+* `Id` The Id of the airline whose summary is requested
+
+**Response**
+
+* `Name` : Name of the Airline
+* `MainBase` : Main base for the Airline
+* `MainBaseUrl` : Url link to the main base profile
+* `Fleet` : Brief summary of the airline fleet
+    * `Url` : URL of the airline's fleet page
+    * `AircraftInService`: List of aircraft types against the amount of each type
+    * `InService` : The number of aircraft in service
+    * `OnOrder` : The number of aircraft on order
+    * `AverageAge` : The average age of airline fleet
+* `Financials`: Brief summary of the airline's financials
+    * `Url`: URL of the airline's financials page
+    * `Revenue`: The revenue in millions of US Dollars
+    * `RevenueYear`: Year for which the `Revenue` is reported
+    * `NetProfit`: Net profit in millions of US Dollars
+    * `NetProfitYear`: year for which the `NetProfit` is reported
+
+--
+
+GET /v1/Airlines/Summary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+   "Id":-456,
+   "Name":"British Airways",
+   "MainBase":"London Heathrow",
+   "MainBaseUrl":"http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001",
+   "Fleet":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/FleetSummary.aspx?AirID=-456",
+      "AircraftInService":[
+         {
+            "AircraftType":"777",
+            "Amount":53
+         },
+         {
+            "AircraftType":"747",
+            "Amount":52
+         },
+         {
+            "AircraftType":"767",
+            "Amount":21
+         },
+         {
+            "AircraftType":"737",
+            "Amount":18
+         },
+         {
+            "AircraftType":"787",
+            "Amount":4
+         }
+      ],
+      "InService":262,
+      "OnOrder":41,
+      "AverageAge":8
+   },
+   "Financials":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/Finance.aspx?AirID=-456",
+      "Revenue":17238,
+      "RevenueYear":2012,
+      "NetProfit":-159,
+      "NetProfitYear":2012
+   },
+   "Traffic":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/Traffic.aspx?AirID=-456",
+      "Year":2012,
+      "PassengersCarried":37580
+   },
+   "Alliance":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/Alliances.aspx?AirID=-456",
+      "GlobalAlliances":[
+         {
+            "Url":null,
+            "Name":"Oneworld"
+         }
+      ]
+   },
+   "Ownership":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/Ownership.aspx?AirID=-456",
+      "ParentCompanyName":"International Airlines Group",
+      "ParentCompanyProfileUrl":"http://pro.flightglobal.com/Pages/Profiles/Airlines/Summary.aspx?AirID=-24669"
+   },
+   "Routes":{
+      "Url":"http://pro.flightglobal.com/Pages/Profiles/Airlines/AirlineRoutes.aspx?AirID=-456",
+      "FlightsPerWeek":5837,
+      "NonstopDestinations":172
+   }
+}
+
+--
+/Airlines/Types
+Returns A list of Airlines Types
+
+**Request**
+
+**Response**
+
+* `AirlineTypes`
+    * `Types`
+        * `Name`: Airline Type Name e.g. `Low Cost`
+--
+
+GET /v1/Airlines/Types
+< 200
+< Content-Type: application/json
+{
+    "AirlineTypes": {
+        "Types": [
+            {
+                "Name": "Mainline"
+            },
+            {
+                "Name": "Cargo"
+            }
+        ]
+    }
+}
+
+--
+/Airlines/Search
+Returns A list of Airlines with extra metadata
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `sortOrder`: `Desc` `Asc` (Defaults `ASC`)
+* `SortField`: `Country` `Name` `Region` `Pax` `Type` `Aircraft` (Deafults `Name`)
+* `Text`: Search Term
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+* `Regions: `1,2` See `/Geography/Regions` for Regions
+* `Countries`: `293,303` see `/Geography/Regions` for Countries
+* `hideInactive`: `true` to show only active organisations
+* `types`: A comma Seperated List of Airline Types `Low Cost,mainline` (case Insensitive) See Airlines/Types Endpoint
+* `Statuses`: A list of organisation Statuses see `organistion/statuses` for the list
+
+**Response**
+
+* `AirlineSearch`
+    * `Total`: Total Number of Airlines
+    * `Results`
+        * `OrganisationId`: The Id of the Airline
+        * `OrganisationUrl`: The URL of the Airline summary page
+        * `Name`: The Name of the Airline* `
+        * `Iata`: The Airline's Iata Code
+        * `Country`: The country of the Airline
+        * `Region`: The Region of the Airline
+        * `Type` : The Airline's Types
+        * `Pax` : The Airline's Passenger Count
+        * `Aircraft` : Total number of Aircraft the Airline have in Service
+        * `Status` : The airlines Status e.g. `operating`
+--
+
+GET /v1/Airlines/Search{?apiToken,text,sortOrder,sortField,Country,Region,Skip,Take,hideInactive,types}
+< 200
+< Content-Type: application/json
+{
+   "AirlineSearch": {
+        "Results": [
+        {
+            "OrganisationId": -21297,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airline/summary/-21297",
+            "Name": "1time Airline",
+            "Iata": null,
+            "Country": "South Africa",
+            "Region": "Africa",
+            "Type": "Airline Group",
+            "Pax": 033,
+            "Aircraft": 0,
+            "Status": "Operating"
+        },
+        {
+            "OrganisationId": -22975,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airline/summary/-22975",
+            "Name": "1time Holdings Limited",
+            "Iata": null,
+            "Country": "South Africa",
+            "Region": "Africa",
+            "Type": null,
+            "Pax": 0,
+            "Aircraft": 0,
+            "Status": "Suspended"
+        }
+    ],
+    "Total": 800
+   }
+}
+
+--
+/Airlines/Information
+Returns an overview of the airline information
+
+**Request**
+
+* `Id` The Id of the airline whose information is requested
+
+**Response**
+
+* `Id`: Id of the airline
+* `Name` : Name of the airline
+* `BusinessModel`: Category of the airline
+* `Description` : Description of the airline
+* `ShortDescription` : Brief description of the airline
+* `History`: History of the airline
+* `ShortHistory`: Brief history of the airline
+* `Thumbnail`: URL of the airline tailfin
+* `AltText`: Alt text for the `Thumbnail`
+* `ContactInfo`
+    * `Website`: The airline's website
+    * `Email`: Main contact email address
+    * `Telephone`: Main contact telephone number
+    * `Fax`: Main fax number of the airline
+* `Address`:
+    * `Line1`,`Line2`,`Line3`,`Line4`: Address lines
+    * `City`: The address city
+    * `State`: The address state
+    * `Country`: The address country
+    * `Region`: The address region, if available
+    * `Postcode`: The address postcode
+* `OperationalStatus`: 
+    * `Status`: Current operational status, such as `Ceased`, `Suspended`, `Operating`, `In start-up`
+    * `FormedDate`: Date of airline formation
+    * `StartedDate`: Date the airline began operations
+    * `SuspendedDate`: Date the airline suspended operations
+    * `CeasedDate`: Date the airline ceased operations
+* `MainBase`: (Main operating base of the airline)
+    * `Id`: Id of the airline's main base
+    * `Name`: Name of the airline's main base
+    * `Url`: (If available) URL of the profile page for the main base
+* AirlineProfileNewsUrl : The url for the profile news
+* FinanceUrl : The url for the finance news
+* OwnershipUrl : The url for the ownership news
+* PersonnelUrl : The url for the personnel news
+* TrafficUrl : The url for the traffic news
+* FleetSummaryUrl : The url for the fleet news
+* AirlineRoutesUrl : The url for the routes news
+* AlliancesUrl : The url for the alliances news
+* AirlineMaintenanceUrl : The url for the maintenance news
+
+--
+
+GET /v1/Airlines/Information{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "Id": -456,
+    "Name": "British Airways",
+    "BusinessModel": "Airlines - Mainline",
+    "Description": "UK flag carrier and one of the world’s leading airlines, operating services to destinations worldwide. A founding member of the Oneworld global airline alliance, the combined members of which, in mid-2011, served nearly 900 destinations in more than 150 countries, with some 9,500 daily departures. Together with Spanish flag-carrier Iberia, British Airways makes up the International Airlines Group (IAG), in which it is the senior partner. ",
+    "ShortDescription": "UK flag carrier and one of the world’s leading airlines, operating services to destinations worldwide. A founding member of the Oneworld global airline alliance, the combined members of which, in mid-2011, served nearly 900 destinations in more than 150 countries, with some 9,500 daily departures. Together with Spanish flag-carrier Iberia, British Airways makes up the International Airlines Group (IAG), in which it is the senior partner.",
+    "History": "Able to trace its origins back to the birth of civil aviation and the creation, on 5 October 1916, of Aircraft Transport and Travel (AT&T). The company launched the world's first sustained daily international scheduled air service on 25 August 1919, flown between London and Paris. Several fledgling airlines evolved in the UK over the next few years, and on 31 March 1924, four of them: British Air Marine Navigation Company, Daimler Airways (previously Daimler Hire, a successor to AT&T), Handley Page Transport and The Instone  Air Line, merged to become Imperial Airways Limited. Within a year, Imperial Airways was providing services from the new London Airport at Croydon to Paris, Brussels, Basle, Cologne and Zurich. New services were introduced during the 1920s and 1930s to Egypt, the Arabian Gulf, India, South Africa, Singapore and West Africa. A service between the UK and Australia was established in 1935, in co-operation with Qantas Empire Airways, which operated the sectors between Singapore and Australia.<p>  In 1935, a number of smaller, privately-owned, air transport companies which had developed and launched services of their own merged to form BA Limited. Following a government review, Imperial Airways and BA Limited were nationalised on 24 November 1939, to form British Overseas Airways Corporation (BOAC). In the pre- and early post-war period, BOAC continued to operate long-haul services, primarily by flying boat around the globe. The Civil Aviation Act of 1946 led to the division of BOAC into three separate companies. While BOAC continued to operate Empire, Far East and North American routes, British European Airways (BEA) was established on 1 August 1946 to operate domestic and European routes, and British South America Airways (BSAA) was created to operate routes to South America and the Caribbean. Just three year later, BSAA was re-integrated into BOAC. BOAC operated the world's first passenger jet service, between London and Johannesburg, with a de Havilland Comet 1, on 2 May 1952. <p>  In 1967, the government set up another study into the industry, which recommended the creation of a National Air Holding Board, to be responsible for the UK’s two major airlines, BOAC and BEA, and two smaller regional carriers, Northeast Airlines and Cambrian Airways which became part of the British Air Services group The Board was also responsible for the creation of an independently-owned 'second force' airline, to be brought about by ‘unifying various independents`. The companies concerned were Caledonian Airways and the airline it took over, in November 1970, British United Airways, to create the independent carrier that in September 1971 became British Caledonian Airways (BCAL). The new independent had an extensive global route network serving over 40 destinations in around 25 countries on five continents. In August 1971, the enactment of  Civil Aviation Act resulted in BEA and BOAC coming together as British Airways (BA) on 1 April 1974. Although this merger was to lead initially to substantial financial losses and industrial strife, the new airline inherited its predecessors' pioneering paths, launching the world's first supersonic passenger service, from London to Bahrain (simultaneously with Air France’s service from Paris to Rio) with Concorde on 21 January 1976. <p>  In July 1979 the Government announced its intention to sell shares in BA. In February 1987 BA was privatised. A merger with British Caledonian was announced in July 1987, and completed with integration of the two carriers under the BA brand on 14 April 1988. <p>  In 1992, BA acquired an initial 49.9% holding in France's leading independent carrier, TAT European Airlines, which was increased to 100% in 1996. BA later withdraw completely from French domestic operations. BA also acquired 49% of Friedrichshafen-based regional carrier Delta Air Regionalflug in early 1992, renaming the carrier as Deutsche BA in March 1992. <p>  In 1993, BA acquired a 25% stake in  Australian flag-carrier Qantas for £290 million. In January 1993, BA had also formed an alliance with US Airways, purchasing a 24.6% stake in the Charlotte-based carrier for $300 million. Following a court battle, there was a parting of the ways with the US carrier in 1996, after BA announced its intention of forming a partnership with American Airlines. BA subsequently divested its interests in US Airways and the codeshare between the two carrier expired in March 1997. <p>   At the end of 1998, BA agreed to acquire CityFlyer Express, which was operating as a BA franchise, for £75 million. <p>   BA was a founder member of the Oneworld global airline alliance, with American Airlines, Canadian, Cathay Pacific and Qantas on 1 February 1999. <p>   BA acquired a 9% stake in Iberia Lineas Aereas de España SA in March 2000, as part of the Spanish airline's privatisation programme. BA was engaged in merger talks with KLM from June 2000, but withdrew in September 2000, after failing to reach agreement with the Dutch carrier. In November 2000, BA announced much-improved second quarter financial results and put its low cost carrier subsidiary, Go Fly Aviation, up for sale. In December 2000, BA restructured its loss-making Gatwick operation, reducing long-haul flights and cutting around 1000 jobs. <p>   In 2002, plans for a potential merger with American Airlines, already raised and abandoned more than once during the 1990s, again came to nothing. <p>   In 2001, in the aftermath of \"9/11\" BA cut flight operations by 10%, withdrew 20 aircraft from service and cut 7,000 jobs, in line with reduced passenger demand. <p>   On 8 September 2004, BA announced the sale of its 18.5% stake in Qantas, which raised £425 million. In October 2005 BA again resumed merger talks with American Airlines. <p>   On 5 March 2007, BA completed the sale of its UK regional subsidiary carrier, BA Connect, to Flybe. Through the deal, which included many of the aircraft and routes of BA Connect, but not the brand itself, BA also acquired a 15% stake in Flybe. The BA Connect brand was subsequently adopted by franchise partner GB Airways on all of its services for BA, flown from Manchester, East Midlands and Bristol from 25 March 2007. <p>   A new wholly-owned subsidiary, BA Cityflyer, launched services from London City Airport on 25 March 2007.<p>   From late April 2007, BA was considering making a consortium offer with a number of private equity companies for Spanish flag carrier Iberia. In early June 2007, it was announced that BA and its consortium partners had agreed that BA would hold the right to take over Iberia within three to five years, as part of any possible bid by the consortium for the Spanish airline. <p>   In June 2007, CEO Willie Walsh indicated that BA would be operating transatlantic business class services to US destinations, using dedicated aircraft by the summer of 2008. This plan came to fruition in July 2008 when wholly-owned subsidiary \"OpenSkies\" launched services from New York (JFK) to Paris Orly with a Boeing 757 configured for just 82 passengers in business, premium economy and economy classes. <p>  In October 2008, British Airways announced that it would be ending its franchise agreements with both GB Airways and Loganair, so as to concentrate on its transatlantic services. On 2 July 2008, BA agreed to acquire French premium carrier L'Avion for £54 million (US$ 108 million), in a deal which was completed by the end of July 2008. L'Avion was to be merged into OpenSkies, which would then operate three Boeing 757s. <p>   On 29 July 2008, BA and Iberia announced they were negotiating for a potential all-share merger between the two carriers. Talks held with Qantas in December 2008 over a possible merger were abandoned after Qantas had insisted on being the majority shareholder in the merged carrier. <p>  On 23 October 2009, BA launched a new all-business service, operating the first long-haul flights between London City Airport and New York's JFK International Airport, using two Airbus A318s configured for 32 business class only seats. The A318s were equipped for the steep approaches required at London City Airport. Westbound services required a fuel stop at Shannon, which also allowed passengers to pre-clear US Customs. <p>  In November 2009, and after months of talks, British Airways and Iberia agreed to merge. The merger was initially expected to be completed in late 2010. <p>   On 13 February 2010, the US DoT issued its initial approval of the codeshare and joint venture anti-trust Immunity application made with Oneworld partners BA, American Airlines, Finnair and Royal Jordanian. Anti-Trust Immunity was duly received and BA, Iberia and American Airlines signed a joint business agreement covering their North Atlantic routes. On 8 April 2010, BA and Iberia signed their formal merger agreement. <p>   In July 2010, Oneworld Alliance members BA, American Airlines, Finnair, Iberia and Royal Jordanian Airlines were cleared to co-operate on transatlantic routes from 6 October 2010, after receiving final anti-trust immunity approval from the EU and US DoT. <p>  In September 2010, to Iberia decided to proceed with the BA merger. On 29 November 2010, the shareholders of both BA and Iberia voted in favour of the merger. On 24 January 2011, British Airways' and Iberia's shares were cancelled and the merged companies began trading as the International Consolidated Airlines Group, signifying the completion of the merger. In April 2011, British Airways and Iberia announced that their respective cargo operations were to be combined into a single business division, although both retained their existing brands.<p>   Parent the International Airlines Group announced an agreement in principle to buy British Midland International bmi from the Lufthansa Group on 4 November 2011. <p>  Parent IAG announced the acquisition of BMI British Midland from Lufthansa for £172.5 million ($271 million) on 22 December 2011.",
+    "ShortHistory": "Able to trace its origins back to the birth of civil aviation and the creation, on 5 October 1916, of Aircraft Transport and Travel (AT&T). The company launched the world's first sustained daily international scheduled air service on 25 August 1919, flown between London and Paris. Several fledgling airlines evolved in the UK over the next few years, and on 31 March 1924, four of them: British Air Marine Navigation Company, Daimler Airways (previously Daimler Hire, a successor to AT&T), Handley Page Transport and The Instone  Air Line, merged to become Imperial Airways Limited. Within a year, Imperial Airways was providing services from the new London Airport at Croydon to Paris, Brussels, Basle, Cologne and Zurich. New services were introduced during the 1920s and 1930s to Egypt, the Arabian Gulf, India, South Africa, Singapore and West Africa. A service between the UK and Australia was established in 1935, in co-operation with Qantas Empire Airways, which operated the sectors between Singapore and Australia.<p>  In 1935, a number of smaller, privately-owned, air transport companies which had developed and launched services of their own merged to form BA Limited. Following a government review, Imperial Airways and BA Limited were nationalised on 24 November 1939, to form British Overseas Airways Corporation (BOAC). In the pre- and early post-war period, BOAC continued to operate long-haul services, primarily by flying boat around the globe. The Civil Aviation Act of 1946 led to the division of BOAC into three separate companies. While BOAC continued to operate Empire, Far East and North American routes, British European Airways (BEA) was established on 1 August 1946 to operate domestic and European routes, and British South America Airways (BSAA) was created to operate routes to South America and the Caribbean. Just three year later, BSAA was re-integrated into BOAC. BOAC operated the world's first passenger jet service, between London and Johannesburg, with a de Havilland Comet 1, on 2 May 1952. <p>  In 1967, the government set up another study into the industry, which recommended the creation of a National Air Holding Board, to be responsible for the UK’s two major airlines, BOAC and BEA, and two smaller regional carriers, Northeast Airlines and Cambrian Airways which became part of the British Air Services group The Board was also responsible for the creation of an independently-owned 'second force' airline, to be brought about by ‘unifying various independents`. The companies concerned were Caledonian Airways and the airline it took over, in November 1970, British United Airways, to create the independent carrier that in September 1971 became British Caledonian Airways (BCAL). The new independent had an extensive global route network serving over 40 destinations in around 25 countries on five continents. In August 1971, the enactment of  Civil Aviation Act resulted in BEA and BOAC coming together as British Airways (BA) on 1 April 1974. Although this merger was to lead initially to substantial financial losses and industrial strife, the new airline inherited its predecessors' pioneering paths, launching the world's first supersonic passenger service, from London to Bahrain (simultaneously with Air France’s service from Paris to Rio) with Concorde on 21 January 1976. <p>  In July 1979 the Government announced its intention to sell shares in BA. In February 1987 BA was privatised. A merger with British Caledonian was announced in July 1987, and completed with integration of the two carriers under the BA brand on 14 April 1988. <p>  In 1992, BA acquired an initial 49.9% holding in France's leading independent carrier, TAT European Airlines, which was increased to 100% in 1996. BA later withdraw completely from French domestic operations. BA also acquired 49% of Friedrichshafen-based regional carrier Delta Air Regionalflug in early 1992, renaming the carrier as Deutsche BA in March 1992. <p>  In 1993, BA acquired a 25% stake in  Australian flag-carrier Qantas for £290 million. In January 1993, BA had also formed an alliance with US Airways, purchasing a 24.6% stake in the Charlotte-based carrier for $300 million. Following a court battle, there was a parting of the ways with the US carrier in 1996, after BA announced its intention of forming a partnership with American Airlines. BA subsequently divested its interests in US Airways and the codeshare between the two carrier expired in March 1997. <p>   At the end of 1998, BA agreed to acquire CityFlyer Express, which was operating as a BA franchise, for £75 million. <p>   BA was a founder member of the Oneworld global airline alliance, with American Airlines, Canadian, Cathay Pacific and Qantas on 1 February 1999. <p>   BA acquired a 9% stake in Iberia Lineas Aereas de España SA in March 2000, as part of the Spanish airline's privatisation programme. BA was engaged in merger talks with KLM from June 2000, but withdrew in September 2000, after failing to reach agreement with the Dutch carrier. In November 2000, BA announced much-improved second quarter financial results and put its low cost carrier subsidiary, Go Fly Aviation, up for sale. In December 2000, BA restructured its loss-making Gatwick operation, reducing long-haul flights and cutting around 1000 jobs. <p>   In 2002, plans for a potential merger with American Airlines, already raised and abandoned more than once during the 1990s, again came to nothing. <p>   In 2001, in the aftermath of \"9/11\" BA cut flight operations by 10%, withdrew 20 aircraft from service and cut 7,000 jobs, in line with reduced passenger demand. <p>   On 8 September 2004, BA announced the sale of its 18.5% stake in Qantas, which raised £425 million. In October 2005 BA again resumed merger talks with American Airlines. <p>   On 5 March 2007, BA completed the sale of its UK regional subsidiary carrier, BA Connect, to Flybe. Through the deal, which included many of the aircraft and routes of BA Connect, but not the brand itself, BA also acquired a 15% stake in Flybe. The BA Connect brand was subsequently adopted by franchise partner GB Airways on all of its services for BA, flown from Manchester, East Midlands and Bristol from 25 March 2007. <p>   A new wholly-owned subsidiary, BA Cityflyer, launched services from London City Airport on 25 March 2007.<p>   From late April 2007, BA was considering making a consortium offer with a number of private equity companies for Spanish flag carrier Iberia. In early June 2007, it was announced that BA and its consortium partners had agreed that BA would hold the right to take over Iberia within three to five years, as part of any possible bid by the consortium for the Spanish airline. <p>   In June 2007, CEO Willie Walsh indicated that BA would be operating transatlantic business class services to US destinations, using dedicated aircraft by the summer of 2008. This plan came to fruition in July 2008 when wholly-owned subsidiary \"OpenSkies\" launched services from New York (JFK) to Paris Orly with a Boeing 757 configured for just 82 passengers in business, premium economy and economy classes. <p>  In October 2008, British Airways announced that it would be ending its franchise agreements with both GB Airways and Loganair, so as to concentrate on its transatlantic services. On 2 July 2008, BA agreed to acquire French premium carrier L'Avion for £54 million (US$ 108 million), in a deal which was completed by the end of July 2008. L'Avion was to be merged into OpenSkies, which would then operate three Boeing 757s. <p>   On 29 July 2008, BA and Iberia announced they were negotiating for a potential all-share merger between the two carriers. Talks held with Qantas in December 2008 over a possible merger were abandoned after Qantas had insisted on being the majority shareholder in the merged carrier. <p>  On 23 October 2009, BA launched a new all-business service, operating the first long-haul flights between London City Airport and New York's JFK International Airport, using two Airbus A318s configured for 32 business class only seats. The A318s were equipped for the steep approaches required at London City Airport. Westbound services required a fuel stop at Shannon, which also allowed passengers to pre-clear US Customs. <p>  In November 2009, and after months of talks, British Airways and Iberia agreed to merge. The merger was initially expected to be completed in late 2010. <p>   On 13 February 2010, the US DoT issued its initial approval of the codeshare and joint venture anti-trust Immunity application made with Oneworld partners BA, American Airlines, Finnair and Royal Jordanian. Anti-Trust Immunity was duly received and BA, Iberia and American Airlines signed a joint business agreement covering their North Atlantic routes. On 8 April 2010, BA and Iberia signed their formal merger agreement. <p>   In July 2010, Oneworld Alliance members BA, American Airlines, Finnair, Iberia and Royal Jordanian Airlines were cleared to co-operate on transatlantic routes from 6 October 2010, after receiving final anti-trust immunity approval from the EU and US DoT. <p>  In September 2010, to Iberia decided to proceed with the BA merger. On 29 November 2010, the shareholders of both BA and Iberia voted in favour of the merger. On 24 January 2011, British Airways' and Iberia's shares were cancelled and the merged companies began trading as the International Consolidated Airlines Group, signifying the completion of the merger. In April 2011, British Airways and Iberia announced that their respective cargo operations were to be combined into a single business division, although both retained their existing brands.<p>   Parent the International Airlines Group announced an agreement in principle to buy British Midland International bmi from the Lufthansa Group on 4 November 2011. <p>  Parent IAG announced the acquisition of BMI British Midland from Lufthansa for £172.5 million ($271 million) on 22 December 2011.",
+    "Thumbnail": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+    "AltText": "British AirwaysTailfin Logo",
+    "ContactInfoResponse": {
+        "Website": "www.ba.com",
+        "Email": "media.relations@ba.com",
+        "Telephone": "+44 20 8738 5050",
+        "Fax": "+44 20 8738 9838"
+    },
+    "AddressResponse": {
+        "Line1": "PO Box 365",
+        "Line2": "Harmondsworth",
+        "Line3": null,
+        "Line4": null,
+        "City": "West Drayton",
+        "State": null,
+        "Country": "United Kingdom",
+        "Region": "Europe",
+        "Postcode": "UB7 0GB"
+    },
+    "OperationalStatusResponse": {
+        "Status": "Operating",
+        "FormedDate": "1919-06-30T00:00:00",
+        "StartedDate": "1919-08-25T00:00:00",
+        "SuspendedDate": null,
+        "CeasedDate": null
+    },
+    "MainBaseResponse": {
+        "Id": -13001,
+        "Name": "London Heathrow",
+        "Url": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001"
+    },
+    "AirlineProfileNewsUrl": null,
+    "FinanceUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/Finance.aspx?AirID=-456",
+    "OwnershipUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/Ownership.aspx?AirID=-456",
+    "PersonnelUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/Personnel.aspx?AirID=-456",
+    "TrafficUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/Traffic.aspx?AirID=-456",
+    "FleetSummaryUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/FleetSummary.aspx?AirID=-456",
+    "AirlineRoutesUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/AirlineRoutes.aspx?AirID=-456",
+    "AlliancesUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/Alliances.aspx?AirID=-456",
+    "AirlineMaintenanceUrl": "http://proreskin.flightglobal.com/Pages/Profiles/Airlines/AirlineMaintenance.aspx?AirID=-456"
+}
+
+--
+/Airlines/FinancialsSummary
+Returns an overview of the airline's financial summary.
+
+**Request**
+
+* `Id` The Id of the airline whose financial information is requested
+
+**Response**
+
+* A list of financial summaries
+     * `Year : The financial year
+     * `TotalRevenue`: The total revenue in millions
+     * `NetResult`: The net profit of the company
+     * `OperatingResult`: The operating revenue in millions
+     * `RevenueChange`: The percentage change of the Annual Operating Revenue value compared to previous year, if available, else `null`
+
+--
+
+GET /v1/Airlines/FinancialsSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{"FinancialsSummary":
+[{"Year":2010,"TotalRevenue":13167.0,"NetResult":-15.0,"OperatingResult":304.0,"RevenueChange":6.800},{"Year":2011,"TotalRevenue":16076.0,"NetResult":1082.0,"OperatingResult":834.0,"RevenueChange":17.000},{"Year":2012,"TotalRevenue":17238.0,"NetResult":-159.0,"OperatingResult":371.0,"RevenueChange":8.400}]
+}
+
+
+--
+/Airlines/TrafficSummary
+Returns an overview of the airline's traffic summary.
+
+**Request**
+
+* `Id` The Id of the airline whose traffic information is requested
+
+**Response**
+
+* A list of traffic summaries for the airline
+     * `LoadFactor`: The percentage change of the RevenuePerPassengerKM value compared to previous year, if available, else `null`
+     * `Passengers`: The percentage change of the FreighttonKM value compared to previous year, if available, else `null`     
+     * `Year`: The year relating to each traffic summary
+
+--
+
+GET /v1/Airlines/TrafficSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{"LoadFactorAndPAX":[{"LoadFactor":72.8593905266645,"Passengers":37.5800000000,"Year":2012},{"LoadFactor":72.637752199221,"Passengers":34.2500000000,"Year":2011},{"LoadFactor":72.7,"Passengers":30.5510000000,"Year":2010},{"LoadFactor":72.9,"Passengers":32.3460000000,"Year":2009},{"LoadFactor":72.0,"Passengers":33.1170000000,"Year":2008}]}
+
+
+--
+/Airlines/OwnershipSummary
+Returns an overview of the airline's ownership
+
+**Request**
+
+* `Id` The Id of the airline whose ownership information is requested
+
+**Response**
+
+* A list of ownership summaries
+     * `Id`: Id of the owning organisation
+     * `Name`: Name of the owning organisation
+     * `Percentage`: Percentage owned by this organisation
+     * `SummaryUrl`: Profile page for this owning organisation
+
+--
+
+GET /v1/Airlines/OwnershipSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "OwnershipSummary": [
+        {
+            "Id": -19989,
+            "Name": "Singapore Airlines Cargo",
+            "Percentage": 16,
+            "OwnerSummaryPage": "http://pro.flightglobal.com/Pages/Profiles/Airlines/Summary.aspx?AirID=-19989"
+        },
+        {
+            "Id": -624,
+            "Name": "EVA Air",
+            "Percentage": 16,
+            "OwnerSummaryPage": "http://pro.flightglobal.com/Pages/Profiles/Airlines/Summary.aspx?AirID=-624"
+        },
+        {
+            "Id": -506,
+            "Name": "ChinaEasternAirlines",
+            "Percentage": 51,
+            "OwnerSummaryPage": "http: //pro.flightglobal.com/Pages/Profiles/Airlines/Summary.aspx?AirID=-506"
+        }
+    ]
+}
+
+
+
+--
+/Airlines/PeopleSummary
+Returns a list of key people and employee stats
+
+**Request**
+
+* `id` The Id of the airline whose people information is requested
+
+**Response**
+
+* A list of people and employee statistics
+     * `People`
+        * `Name`: Name of the person in the form Title Firstname Surname
+        * `JobTitle`: The actual job title of the person
+        * `Rank`: The importance of the person in the organisation
+     * `Employees` a list of the previous 2 annual employee counts
+        * `Year` The year of the count
+        * `Count` The employee count for the annual reporting period
+
+
+--
+
+GET /v1/Airlines/PeopleSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "People": [
+        {
+            "Name": "Mr Keith Williams",
+            "JobTitle": "Chief Executive Officer",
+            "Rank": 1
+        },
+        {
+            "Name": "Mr Nick Swift",
+            "JobTitle": "Chief Financial Officer",
+            "Rank": 2
+        }
+    ],
+    "Employees": [
+        {
+            "Year": 2012,
+            "Count": 43213
+        },
+        {
+            "Year": 2011,
+            "Count": 40252
+        }
+    ]
+}
+
+
+
+-- 
+/Airlines/RoutesSummary
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airline requested
+
+**Response**
+
+* `RoutesSummary`: A list of destination region routes for the airline specfied by the airline `id` in the request
+    * `RegionId`: The `id` of the region for this particular route
+    * `RegionName` : Then name of the region
+    * `Flights` : The count of flights for this region
+    * `NonStopDestinations` : The count of non stop destinations for this region
+
+
+--
+
+GET /v1/Airlines/RoutesSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "RoutesSummary": [
+        {
+            "RegionId": 1,
+            "RegionName": "Africa",
+            "Flights": 96,
+            "NonStopDestinations": 17
+        },
+        {
+            "RegionId": 3,
+            "RegionName": "Asia Pacific",
+            "Flights": 159,
+            "NonStopDestinations": 19
+        },
+        {
+            "RegionId": 4,
+            "RegionName": "Europe",
+            "Flights": 4931,
+            "NonStopDestinations": 89
+        },
+        {
+            "RegionId": 6,
+            "RegionName": "Latin America",
+            "Flights": 120,
+            "NonStopDestinations": 20
+        },
+        {
+            "RegionId": 7,
+            "RegionName": "Middle East",
+            "Flights": 137,
+            "NonStopDestinations": 11
+        },
+        {
+            "RegionId": 8,
+            "RegionName": "North America",
+            "Flights": 328,
+            "NonStopDestinations": 24
+        }
+    ]
+}
+
+--
+/Airlines/AllianceSummary
+Returns a list of Marketing Alliances and Global Alliances
+
+**Request**
+
+* `id` The Id of an airline
+
+**Response**
+
+* A list of Marketing Agreements and Global Alliances
+     * `MarketingAgreements`
+        * `Key`: E.g. `CodeShare` `Commercial` `Feeder`
+        * `Value`: The Number of Agreements they have
+     * `Global Alliances`
+        * `Name` The Name of the Organisation
+        * `Image` The Image Url `Can Be Null`
+        * `Url` The Alliances' Url `Can Be Null`
+
+
+
+--
+
+GET /v1/Airlines/PeopleSummary?{apiToken,id}
+< 200
+< Content-Type: application/json
+{    
+    "MarketingAgreements":
+    {
+        "Codeshare":4,
+        "Commercial":3,
+        "Feeder": 7
+    },
+    "GlobalAlliances":
+    [
+        {
+            "Name":"Eagle Airways",
+            "Image":"http://d3i2yofat64uvr.cloudfront.net/images/logos/2127.jpg",
+            "Url": "http://pro.flightglobal.com/Pages/Profiles/Airlines/Alliances.aspx?AirID=-588"
+        }
+    ]           
+}
+
+
+--
+
+#Airports
+Airport Summaries and details
+--
+
+-- 
+/Airports/Summary
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airport requested
+
+**Response**
+
+* `AirportSummary`: An Airport Summary
+    * `Id`: Airport Id
+    * `AirportName`: Airport Name
+    * `CityServed`: City Served
+    * `CountryServed`: Country Served
+    * `TrafficStatistics`: 
+        * `Rank`: 
+        * `TrafficYear`: 
+        * `Passengers`: 
+        * `CargoTonnes`:
+        * `Movements`: 
+    * `NetworkStatistics`: 
+        * `FlightsPerWeek`: 
+        * `NonstopDestinations`: 
+    * `AirlineTypesServed`: 
+        * `AirlineType`: 
+        * `Count`: 
+    * `AircraftTypes`: 
+        * `AircraftType`: 
+        * `Count`: 
+    * `AirportSummaryUrl`:
+    * `TrafficStatisticsUrl`: 
+    * `AirlineDirectoryUrl`: 
+    * `AircraftAnalysisUrl`: 
+    * `DestinationsAndSchedulesUrl`: 
+
+
+--
+GET /v1/Airports/Summary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "AirportSummary": {
+        "Id": -6484,
+    "AirportName": "London Heathrow",
+    "CityServed": "London",
+    "CountryServed": "United Kingdom",
+    "TrafficStatistics": {
+        "Rank": null,
+        "TrafficYear": 2017,
+        "Passengers": 70,
+        "CargoTonnes": 154,
+        "Movements": 480
+    },
+    "NetworkStatistics": {
+        "FlightsPerWeek": null,
+        "NonstopDestinations": 0
+    },
+    "AirlineTypesServed": [
+        {
+            "AirlineType": "Leisure",
+            "Count": 189
+        },
+        {
+            "AirlineType": "Low cost",
+            "Count": 298
+        },
+    ],
+    "AircraftTypes": [
+        {
+        "AircraftType": "Unknown",
+        "Count": 1832
+        },
+    ],
+    "AirportSummaryUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001",
+    "TrafficStatisticsUrl": "http://pro.flightglobal.com/pages/profiles/airports/airporttrafficstatistics.aspx?AirID=-13001",
+    "AirlineDirectoryUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportairlinedirectory.aspx?AirID=-13001",
+    "AircraftAnalysisUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportaircraftanalysis.aspx?AirID=-13001",
+    "DestinationsAndSchedulesUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportroutes.aspx?AirID=-13001"
+    }
+}
+
+--
+/Airports/Search
+Returns A list of Airports with extra metadata
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `sortOrder`: `Desc` `Asc` (Defaults `ASC`)
+* `SortField`: `Country` `Name` `Region` `Iata` `Freight` `Pax` `City` (Deafults `Name`)
+* `Text`: Search Term
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+* `Regions: `1,2` See `/Geography/Regions` for Regions
+* `Countries`: `293,303` see `/Geography/Regions` for Countries
+* `hideInactive`: `true` to show only active organisations
+* `Statuses`: A list of airport Statuses see `organistion/statuses` for the list
+
+**Response**
+
+* `AirportSearch`
+    * `Total`: Total Number of Airports
+    * `Results`
+        * `OrganisationId`: The Id of the Airport
+        * `OrganisationUrl`: The URL of the Airport summary page
+        * `Name`: The Name of the Airline
+        * `Iata`: The Airports's Iata Code
+        * `Country`: The country of the Airport
+        * `Region`: The Region of the Airport
+        * `City` : The Airport's City
+        * `Pax` : The Airports's Passenger Count
+        * `Freight` : The Airport's Feright Count
+        * `Status` : The Airports Status
+--
+
+GET /v1/Airports/Search{?apiToken,text,sortOrder,sortField,Country,Region,Skip,Take}
+< 200
+< Content-Type: application/json
+{
+   "AirportSearch": {
+        "Results": [
+        {
+            "OrganisationId": -21297,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airport/summary/-21297",
+            "Name": "1time Airline",
+            "Iata": null,
+            "Country": "South Africa",
+            "Region": "Africa",
+            "City": "Example",
+            "Pax": 033,
+            "Freight": 0,
+            "Status": "Operating"
+        },
+        {
+            "OrganisationId": -22975,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/airport/summary/-22975",
+            "Name": "1time Holdings Limited",
+            "Iata": null,
+            "Country": "South Africa",
+            "Region": "Africa",
+            "City": "Example2",
+            "Pax": 0,
+            "Freight": 40,
+            "Status": "Suspended"
+        }
+    ],
+    "Total": 800
+   }
+}
+
+-- 
+/Airports/Information
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airport requested
+
+**Response**
+
+* `AirportInformation`: An Airport Summary
+    * `Id`: Airport Id
+    * `Name`: Airport Name
+    * `Description`: A Description about the Airport
+    * `ShortDescription`: A Description about the Airport
+    * `History`: The Airport History
+    * `ShortHistory`: An Airports Short History
+    * `Logo`: 
+    * `Iata`: 
+    * `Icao`: 
+    * `ContactInformation`: 
+        * `Website`: 
+        * `Email`: 
+        * `Telephone`: 
+        * `Fax`: 
+    * `Address`: 
+        * `Line1`: 
+        * `Line2`: 
+        * `Line3`: 
+        * `Line4`: 
+        * `City`: 
+        * `State`: 
+        * `Country`: 
+        * `Region`: 
+        * `Postcode`: 
+        * `Latitude`: 
+        * `Longitude`: 
+    * `OperationalStatus`: 
+        * `Status`: 
+        * `FormedDate`: 
+        * `StartedDate`: 
+        * `SuspendedDate`: 
+        * `CeasedDate`: 
+    * `AssociatedPages`: 
+        * `SummaryUrl`: 
+        * `NewsUrl`: 
+        * `TrafficUrl`: 
+        * `AirlinesUrl`:
+        * `RoutesUrl`: 
+        * `AircraftUrl`: 
+    
+--
+GET /v1/Airports/Information{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+"AirportInformation": {
+"Id": -13001,
+"Name": "London Heathrow",
+"Description": "example",
+"ShortDescription": null,
+"History": "example",
+"ShortHistory": null,
+"Logo": "http://d3i2yofat64uvr.cloudfront.net/images/logos/2963.jpg",
+"Iata": "RKW",
+"Icao": "EXPL",
+"ContactInformation": {
+"Website": "www.example.com",
+"Email": null,
+"Telephone": "+44 000 000 000 0",
+"Fax": null
+},
+"Address": {
+"Line1": "some place",
+"Line2": "example",
+"Line3": "Nelson Road",
+"Line4": null,
+"City": "Hounslow",
+"State": null,
+"Country": "United Kingdom",
+"Region": "Europe",
+"Postcode": "LE11 8GH",
+"Latitude": null,
+"Longitude": null
+},
+"OperationalStatus": {
+"Status": "Operating",
+"FormedDate": "1943-06-30T00:00:00",
+"StartedDate": "1946-01-01T00:00:00",
+"SuspendedDate": null,
+"CeasedDate": null
+},
+"AssociatedPages": {
+"SummaryUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001",
+"NewsUrl": "http://pro.flightglobal.com/Pages/Profiles/Airports/AirportProfileNews.aspx?AirID=-13001",
+"TrafficUrl": "http://pro.flightglobal.com/pages/profiles/airports/airporttrafficstatistics.aspx?AirID=-13001",
+"AirlinesUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportairlinedirectory.aspx?AirID=-13001",
+"RoutesUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportroutes.aspx?AirID=-13001",
+"AircraftUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportaircraftanalysis.aspx?AirID=-13001"
+}
+}
+}
+
+-- 
+/Airports/InfrastructureSummary
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The id of the company `airport only`
+
+**Response**
+
+* `InfrastructureSummary`: An Airport Summary
+    * `Terminals`: 
+        * `Name`: The Terminal's Name
+        * `NumberOfGates`: The Number of gates the terminal has
+    * `Runways`: 
+        * `Name`: The Runway name
+        * `Length`: The Length of the runway in meters
+
+--
+GET /v1/Airports/InfrastructureSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+"AirportInfrastructureSummary": {
+    "Terminals": [
+        {
+        "Name": "Terminal 1",
+        "NumberOfGates": 89
+        },
+        {
+        "Name": "Terminal 3",
+        "NumberOfGates": 28
+        }
+    ],
+    "Runways": [
+        {
+        "Name": "example",
+        "Length": 893
+        }
+    ]
+    }
+}
+
+-- 
+/Airports/RoutesSummary
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airport requested
+
+**Response**
+
+* `RoutesSummary`: A list of destination region routes served by the airport specified by the airport `id` in the request
+    * `RegionId`: The `id` of the region for this particular route
+    * `RegionName` : Then name of the region
+    * `Flights` : The count of flights for this region
+    * `NonStopDestinations` : The count of non stop destinations for this region
+    * `Airlines` : The Number of airlines flying for said region
+
+--
+
+GET /v1/Airports/RoutesSummary{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "RoutesSummary": [
+        {
+            "RegionId": 1,
+            "RegionName": "Africa",
+            "Flights": 169,
+            "NonStopDestinations": 20,
+            "Airlines": 2
+        },
+        {
+            "RegionId": 3,
+            "RegionName": "Asia Pacific",
+            "Flights": 365,
+            "NonStopDestinations": 23,
+            "Airlines": null
+            }
+        ]
+}
+
+
+-- 
+
+#MRO 
+MRO Summaries and details
+--
+
+
+--
+/MRO/Summary
+
+Gets the summary for a requested MRO(maintainer)
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The `id` of the MRO
+
+**Response**
+
+* `Name`: The name of the MRO 
+* `BasedIn`: Indicates the Country the MRO organisation resides in
+* `SummaryPageUrl` : The URL of the MRO Summary page
+* `Capability` : This section contains information about the capabilities of the MRO , Each MRO Organisation can maintain up to 3 components
+    * `Airframes` :  The number of unique types of `Airframes` that the MRO  can maintain, if `null` then display `n/a`
+    * `Engines` :  The number of unique types of `Engines` that the MRO  can maintain, if `null` then display `n/a`
+    * `Apus` :  The number of unique types of Auxiliary Power Units that the MRO  can maintain, if `null` then display `n/a`
+    * `AirframeChecks` :  The identifiers of the Airframe Checks, maximum 4 character length { 'A', 'B', 'C', '+'}
+    * `CapabilityPageUrl` : The URL of the MRO Capability page
+* `MaintenanceBays` : This section contains information about the `MaintenanceBays` of the MRO 
+    * `WidebodyBays` :  The number of Widebody Bays, if `null` then display `n/a`
+    * `NarrowbodyBays` :  The number of Narrowbody Bays, if `null` then display `n/a`
+    * `RegionalJetBays` :  The number of Regional Jet Bays, if `null` then display `n/a`
+* `Clients` : This section contains information about the number of `Clients` per Region for the MRO 
+    * `RegionClients` :  A summary list of the cleint per region
+        * `Region` :  The name of the `Region`
+        * `Clients` :  The number of clients for this `Region`
+    * `ClientsPageUrl` :  The URL of the MRO Clients page
+
+--
+GET /v1/mro/summary?apiToken=00000000-0000-0000-0000-000000000001&id=1
+< 200
+< Content-Type: application/json
+{
+    "MroSummary": {
+        "Name": "Lufthansa Technik",
+        "BasedIn": "Germany",
+        "SummaryPageUrl": "http://pro.flightglobal.com/Pages/Profiles/MRO/Summary.aspx?AirID=376489",
+        "Capability": {
+            "Airframes": 10,
+            "Engines": 7,
+            "Apus": 5,
+            "AirframeChecks": "ABC+",
+            "CapabilityPageUrl": "http://pro.flightglobal.com/Pages/Profiles/MRO/Capability.aspx?AirID=376489"
+        },
+        "MaintenanceBays": {
+            "WidebodyBays": 30,
+            "NarrowbodyBays": 20,
+            "RegionalJetBays": 10
+        },
+        "Clients": {
+            "RegionClients": [
+                {
+                    "Region": "Europe",
+                    "Clients": 102
+                },
+                {
+                    "Region": "Africa",
+                    "Clients": 10
+                },
+                {
+                    "Region": "Middle East",
+                    "Clients": 30
+                }
+            ],
+            "ClientsPageUrl": "http://pro.flightglobal.com/Pages/Profiles/MRO/Clients.aspx?AirID=376489"
+        }
+    }
+}
+
+--
+/MRO/CapabilityFilters
+
+Gets the mro Capability Filters for search
+
+**Request**
+
+**Response**
+
+* `TypeCheckFilters` : This section contains information about the capabilities type check filters of the MRO company search filters,
+                                  the UI needs to filter out the non required items as required as this is the full listing of capability type checks
+    * `Id` :  The unique identifier of the capabality type/check
+    * `CheckDescription` :  The description of the capabality check
+    * `CapabilityCheckType` :  The description of the capabality type which is also used to filter down the manfucturer portion of the MroCapabilityManufacturerFamilyFilters 
+       based on ManufacturerType, valid values `Airframe`,`APU`,`Engine`
+* `ManufacturerFilters` : This section contains information about the capability manufacturers and family type filters of the MRO company search filters
+    * `ManufacturerId` :  The unique identifier of the manufacturer
+    * `ManufacturerDescription` :  The description of the manufacturer
+    * `ManufacturerType` :  The description of the manufacturer type which is also used to filter down the manfucturer portion of the family type checks along with the related manufacturer, valid values `Aircraft`,`APU`,`Engine`
+* `FamilyFilters` : This section contains information about the capability family type filters of the MRO company search filters
+    * `Key`: Unique identifier for the family filter 
+    * `FamilyId` :  The unique identifier of the family type check
+    * `FamilyDescription` :  The description of the family type check
+    * `FamilyType` :  The description of the family check type which is also used to relate to manfucturer portion of the family type checks along with the related manufacturer type, valid values `Aircraft`,`APU`,`Engine`
+--
+GET /v1/mro/CapabilityFilters
+< 200
+< Content-Type: application/json
+{
+    "TypeCheckFilters": [
+        {
+            "CheckId": 1685,
+            "CheckDescription": "4C Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1686,
+            "CheckDescription": "8C Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1679,
+            "CheckDescription": "A Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1681,
+            "CheckDescription": "B Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1682,
+            "CheckDescription": "C Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 930,
+            "CheckDescription": "Composites",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1683,
+            "CheckDescription": "D Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 928,
+            "CheckDescription": "Heavy Check",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 929,
+            "CheckDescription": "Strip / Paint",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 1703,
+            "CheckDescription": "Structural Inspection",
+            "CapabilityCheckType": "Airframe"
+        },
+        {
+            "CheckId": 961,
+            "CheckDescription": "APU Hot Section Inspection",
+            "CapabilityCheckType": "APU"
+        },
+        {
+            "CheckId": 960,
+            "CheckDescription": "APU Overhaul",
+            "CapabilityCheckType": "APU"
+        },
+        {
+            "CheckId": 952,
+            "CheckDescription": "Engine Overhaul",
+            "CapabilityCheckType": "Engine"
+        },
+        {
+            "CheckId": 953,
+            "CheckDescription": "Hot Section Inspection",
+            "CapabilityCheckType": "Engine"
+        }
+    ],
+    "ManufacturerFilters": [
+        {
+            "ManufacturerId": 315,
+            "ManufacturerDescription": "BAC",
+            "ManufacturerType": "Airframe"
+        },
+        {
+            "ManufacturerId": 317,
+            "ManufacturerDescription": "BAe",
+            "ManufacturerType": "Airframe"
+        },
+        {
+            "ManufacturerId": 300050,
+            "ManufacturerDescription": "Garrett",
+            "ManufacturerType": "APU"
+        },
+        {
+            "ManufacturerId": 300050,
+            "ManufacturerDescription": "Garrett",
+            "ManufacturerType": "Engine"
+        },
+        {
+            "ManufacturerId": 300102,
+            "ManufacturerDescription": "Omsk",
+            "ManufacturerType": "APU"
+        },
+        {
+            "ManufacturerId": 300102,
+            "ManufacturerDescription": "Omsk",
+            "ManufacturerType": "Engine"
+        }
+    ],
+    "FamilyFilters": [
+        {
+            "Key": "Aircraft|315|4",
+            "FamilyDescription": "1-11",
+            "FamilyType": "Aircraft",
+            "FamilyId": 4,
+            "ManufacturerId": 315
+        },
+        {
+            "Key": "Aircraft|315|6",
+            "FamilyDescription": "125",
+            "FamilyType": "Aircraft",
+            "FamilyId": 6,
+            "ManufacturerId": 315
+        },
+        {
+            "Key": "Engine|300050|27",
+            "FamilyDescription": "ATF3",
+            "FamilyType": "Engine",
+            "FamilyId": 27,
+            "ManufacturerId": 300050
+        },
+        {
+            "Key": "Engine|300050|27",
+            "FamilyDescription": "ATF3",
+            "FamilyType": "Engine",
+            "FamilyId": 27,
+            "ManufacturerId": 300050
+        },
+        {
+            "Key": "APU|300102|100034",
+            "FamilyDescription": "VSU-10",
+            "FamilyType": "APU",
+            "FamilyId": 100034,
+            "ManufacturerId": 300102
+        },
+        {
+            "Key": "APU|300103|100034",
+            "FamilyDescription": "VSU-10",
+            "FamilyType": "APU",
+            "FamilyId": 100034,
+            "ManufacturerId": 300103
+        }
+    ]
+}
+
+--
+/Mro/Search
+Returns a list of Maintainers with extra metadata
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `sortOrder`: `Desc` `Asc` (Defaults `ASC`)
+* `SortField`: `Country` `Name` `Region` `Engine` `Airframe` `Apu` (Deafults `Name`)
+* `Text`: Search Term
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+* `Regions: `1,2` See `/Geography/Regions` for Regions
+* `Countries`: `293,303` see `/Geography/Regions` for Countries
+* `hideInactive`: `true` to show only active organisations,
+* `Statuses`: A list of organisation Statuses see `organistion/statuses` for the list
+* `CheckId`: The Id of the check type to filter on
+* `ManufacturerId`: The Id of the manufacturer to filter on
+* `FamilyId`: The Id of the family to filter on
+
+**Response**
+
+* `MroSearch`
+    * `Total`: Total Number of Maintainers
+    * `Results`
+        * `OrganisationId`: The Id of the Mro
+        * `OrganisationUrl`: The URL of the Mro summary page
+        * `Name`: The Name of the Mro
+        * `Country`: The country of the Mro
+        * `Region`: The Region of the Mro
+        * `Airfame` : Made up of AClass, BClass, Class e.g. ABC+
+        * `Engine` : Whether the Mro maintains Engines
+        * `Apu` : Whether the Mro maintains Apu's
+        * `Status` : The Mro's current status e.g. `Suspended`
+--
+
+GET /v1/Mro/Search{?apiToken,text,sortOrder,sortField,Country,Region,Skip,Take}
+< 200
+< Content-Type: application/json
+{
+   "MroSearch": {
+        "Results": [
+        {
+            "OrganisationId": -21297,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/mro/summary/-21297",
+            "Name": "1time Airline",
+            "Country": "South Africa",
+            "Region": "Africa",
+            "Airframe": "AB",
+            "Engine": false,
+            "Apu": true,
+            "Status" : "Operating"
+        },
+        {
+            "OrganisationId": -22975,
+            "OrganisationUrl": "http://beta.flightglobal.com/app/profiles/#/mro/summary/-22975",
+            "Name": "1time Holdings Limited",
+            "Country": "South Africa",
+            "Region": "Africa",
+            "Airframe": null,
+            "Engine": true,
+            "Apu": false,
+            "Status" : "Suspended"
+        }
+    ],
+    "Total": 80
+   }
+}
+
+--
+/Mro/Information
+Returns an overview of the Mro information
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airport requested
+
+**Response**
+
+* `AirportInformation`: An Airport Summary
+    * `Id`: Airport Id
+    * `Name`: Airport Name
+    * `Description`: A Description about the Airport
+    * `ShortDescription`: A Description about the Airport
+    * `History`: The Airport History
+    * `ShortHistory`: An Airports Short History
+    * `Logo`: The Mro's Logo    
+    * `Iata`: The Mro's IATA Code http://en.wikipedia.org/wiki/IATA_code
+    * `Icao`: The Mro's Icao Code http://en.wikipedia.org/wiki/IATA_code
+    * `ContactInformation`: 
+        * `Website`: The Mro's Website  
+        * `Email`: The Mro's Email Address
+        * `Telephone`: The Mro's Telephone Number
+        * `Fax`: The Mro's Fax Number
+    * `Address`: 
+        * `Line1`: The First Line of the Mro's Address
+        * `Line2`: 
+        * `Line3`: 
+        * `Line4`: 
+        * `City`: The City the Mro is located In
+        * `State`: The State the Mro is located In
+        * `Country`: The Counry the Mro is located in
+        * `Region`: The Region the Mro is located in `Europe` `North America` Etc
+        * `Postcode`: 
+        * `Latitude`: 
+        * `Longitude`: 
+    * `OperationalStatus`: 
+        * `Status`: The Current Status of the Mro `Operating` `Ceased` `Suspended` `Starting`
+        * `FormedDate`: The Date the Mro was Formed
+        * `StartedDate`: The Date the Mro started
+        * `SuspendedDate`: The Date the Mro was suspended
+        * `CeasedDate`: The Date the Mro Ceased
+    * `AssociatedPages`: 
+        * `SummaryUrl`: A Link to the Mro's Summary Page
+        * `CapabilityUrl`: A Link to the Mro's Capability Data Page
+        * `ClientUrl`: A Link to the Mro's Client Data Page
+
+--
+
+GET /v1/Mro/Information{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "MroInformation": {
+        "Id": -456,
+        "Name": "British Airways Engineering",
+        "Description": "<p>Example Sort Description",
+        "ShortDescription": "<p>Example Sort Description",
+        "History": "",
+        "ShortHistory": "",
+        "Logo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/2973.png",
+        "ContactInformation": {
+            "Website": "www.example.com",
+            "Email": null,
+            "Telephone": "+44 000 000 000 0",
+            "Fax": null
+        },
+        "Address": {
+            "Line1": "some place",
+            "Line2": "example",
+            "Line3": "Nelson Road",
+            "Line4": null,
+            "City": "Hounslow",
+            "State": null,
+            "Country": "United Kingdom",
+            "Region": "Europe",
+            "Postcode": "LE11 8GH",
+            "Latitude": null,
+            "Longitude": null
+        },
+        "OperationalStatus": {
+            "Status": "Operating",
+            "FormedDate": "1943-06-30T00:00:00",
+            "StartedDate": "1946-01-01T00:00:00",
+            "SuspendedDate": null,
+            "CeasedDate": null
+        },
+        "MainBaseResponse": {
+            "Id": -13001,
+            "Name": "London Heathrow",
+            "Url": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001"
+        },
+        "AssociatedPages": {
+            "SummaryUrl": "/Pages/Profiles/MRO/Summary.aspx?AirID=-2180",
+            "CapabilityUrl": "/Pages/Profiles/MRO/Capability.aspx?AirID=-2180",
+            "ClientsUrl": "/Pages/Profiles/MRO/Clients.aspx?AirID=-2180"
+        }
+    }
+}
+
+--
+/Mro/CapabilitySummary
+Returns a Summary of Capabilities
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The identifier of the airport requested
+
+**Response**
+
+* `CapabilitySummary`: Can Be Null
+    * `HeavyCheck`: True or False
+    * `StripPaint1: True or False
+    * `Composites`: True or False
+    * `ACheck`: True or False
+    * `BCheck`: True or False
+    * `CCheck`: True or False
+    * `StructuralInspection`: True or False
+    * `EngineOverhaul`: True or False
+    * `HotSectionInspection`: True or False
+    * `ApuOverhaul`: True or False
+    * `ApuHotSectionInspection`: True or False
+
+--
+
+GET /v1/Mro/Information{?apiToken,id}
+< 200
+< Content-Type: application/json
+{
+    "CapabilitySummary": {
+        "HeavyCheck": true,
+        "StripPaint": true,
+        "Composites": true,
+        "ACheck": true,
+        "BCheck": true,
+        "CCheck": true,
+        "StructuralInspection": false,
+        "EngineOverhaul": false,
+        "HotSectionInspection": false,
+        "ApuOverhaul": false,
+        "ApuHotSectionInspection": false
+    }
+}
+
+-- 
+
+#OTHER 
+Miscellaneous endpoints
+--
+
+
+
+--
+/Reports/Search
+
+Gets reports based on the request
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `reportType`: This is the report type to filter on, currently this can be `All` or `Lead`
+* `skip`: For paging, allows you to define the number of items to skip in the results
+* `take`: For paging, allows you to define the size of the page
+
+**Response**
+
+* `Reports` : A collection of the lead reports
+    * `Title` :  the title of the report
+    * `PublishedDate` :  the published date of the report
+    * `Assets` :  A collection of assets relating to the report, this can be a pdf and/or xls document or empty
+        * `AssetFileType` :  The asset file type , this is either `Pdf`,`Xls`,`Xlsx`,`Jpg`,`Jpeg`,`Jpe`,`Png` or `Bmp`
+        * `Location` :  The resource location of the asset, if the user does not have entitlement to the asset then this will be `null`
+
+--
+GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=Lead&skip=0&take=10
+< 200
+< Content-Type: application/json
+{
+    "Reports": [
+        {
+            "Title": "DevSreeTest3",
+            "PublishDate": "2013-06-19T00:00:00",
+            "Assets": [
+                {
+                    "AssetFileType": "Xlsx",
+                    "Location": "http://pro.flightglobal.com/Uploads/excel/ProReport.xlsx"
+                },
+                {
+                    "AssetFileType": "Jpeg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/sh1.jpeg"
+                }
+            ]
+        },
+        {
+            "Title": "DevSreeTest",
+            "PublishDate": "2013-06-18T00:00:00",
+            "Assets": [
+                {
+                    "AssetFileType": "Pdf",
+                    "Location": "http://pro.flightglobal.com/Uploads/pdf/SparkEnergy.pdf"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/ImageTest.jpg"
+                }
+            ]
+        },
+        {
+            "Title": "DevSreeTest2",
+            "PublishDate": "2013-06-18T00:00:00",
+            "Assets": [
+                {
+                    "AssetFileType": "Xlsx",
+                    "Location": "http://pro.flightglobal.com/Uploads/excel/XLSReport.xlsx"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/Naturalbackground.jpg"
+                }
+            ]
+        },
+        {
+            "Title": "World Airline Rankings 2012",
+            "PublishDate": "2013-06-03T14:29:00",
+            "Assets": [
+                {
+                    "AssetFileType": "Pdf",
+                    "Location": "http://pro.flightglobal.com/Uploads/pdf/Pro Report.pdf"
+                },
+                {
+                    "AssetFileType": "Xlsx",
+                    "Location": "http://pro.flightglobal.com/Uploads/excel/Flight Migration Audit.xlsx"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/AFReport2013(165x122).jpg"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/AFReport2013(80x60)Thumb2.jpg"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/Koala.jpg"
+                }
+            ]
+        },
+        {
+            "Title": "ACE Air Cargo",
+            "PublishDate": "2013-06-03T14:27:00",
+            "Assets": [
+                {
+                    "AssetFileType": "Pdf",
+                    "Location": null
+                },
+                {
+                    "AssetFileType": "Xlsx",
+                    "Location": "http://pro.flightglobal.com/Uploads/excel/Flight Migration Audit.xlsx"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/Desert.jpg"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/Jellyfish.jpg"
+                },
+                {
+                    "AssetFileType": "Jpg",
+                    "Location": "http://pro.flightglobal.com/Uploads/images/AFReport2013(80x60)Thumb3.jpg"
+                }
+            ]
+        }
+    ]
+}
+
+
+
+--
+/Enrich/Text
+Returns a list of keyword enhancements for a given block of text. This request is made using an HTTP POST.
+
+**Request**
+
+* `Text` The text to be enriched.  The text needs to be URL encoded.
+
+**Response**
+
+* `TargetText`: The organisation keyword found in the given `ArticleText`
+* `OrganisationId`: The unique identifier of the organisation
+* `Iata`: The IATA code of the organisation,
+* `Type`: `Airline` `Airport` `Mro` ,
+* `HasFleets`: Whether the organisation has fleet data
+* `HasRoutes`: Whether the organisation has route data
+* `HasMroData`: Whether the organisation has MRO data
+* `HasPersonnel`: Whether the organisation has personnel data
+* `HasOwnership`: Whether the organisation has ownership data
+* `HasAlliances`: Whether the organisation has alliances data
+* `HasTraffic`: Whether the organisation has traffic data
+* `HasFinancials`: Whether the organisation has financial data
+* `HasAirlines`: Whether the organisation has airlines
+* `HasAircraft`: Whether the organisation has aircrafts
+* `HasCapabilities`: Whether the organisation has capabilities
+* `HasClients`: whether the organisation has Clients
+* `ContentIndices`: A list of positions in the text where the organisation was found        
+
+--
+
+POST /v1/Enrich/Text
+> Content-Type: application/json
+{ "Text":"<p>ATR chief executive Filippo Bagnato is confident the Franco-Italian airframer can achieve 80 new orders this year as it strives to maintain its backlog at 220 aircraft.</p><p>So far in 2013, lessor Air Lease has announced an order for two ATR 72-600s while Caribbean operator LIAT has converted one option.</p><p>Bagnato, speaking at a Toulouse media briefing, says ATR is busy working with Garuda Indonesia's low-cost subsidiary Citilink to finalise its 50-aircraft order.</p><p>In December 2012 Citilink announced it had selected ATR. The carrier's chief executive Arif Wibowo told Flightglobal that it plans to place a firm order for 25 of the type, with options for a further 25. </p><p>In 2012, ATR recorded 74 firm orders worth $1.7 billion with a further 41 options. This compares with 2011's tally of 157 firm orders and 79 options.</p><p>Bagnato says ATR has sold around 700 aircraft over the past seven years in the 50- to 90-seat market. "In terms of new sales, ATR accounts for 39% of total sales between 2005 and 2012," he says.</p><p>ATR puts Bombardier's Q300 and Q400 turboprops at 21% of the market, while the CRJ family and Embraer 170/175 models take 21% and 19% respectively.</p><p>At the end of 2012 ATR had 61% of the total backlog in the 50 to 90-seat aircraft sector. The Q400 accounted for 11%, the CRJ family 17% and the E-170/E-175 11%.</p>"}
+< 200
+[
+    {
+        "TargetText": "Garuda Indonesia",
+        "OrganisationId": -664,
+        "Iata": "GA",
+        "Type": "Airport",
+        "HasFleets": true,
+        "HasRoutes": true,
+        "HasMroData": true,
+        "HasPersonnel": true,
+        "HasOwnership": true,
+        "HasAlliances": true,
+        "HasTraffic": true,
+        "HasFinancials": true,
+        "HasAirlines": false,
+        "HasAircraft": false,
+        "HasCapabilities": false,
+        "HasClients": false,
+        "ContentIndices": [
+            395
+        ]
+    },
+    {
+        "TargetText": "Citilink",
+        "OrganisationId": -20382,
+        "Iata": "QG",
+        "Type": "Airline",
+        "HasFleets": true,
+        "HasRoutes": true,
+        "HasMroData": false,
+        "HasPersonnel": true,
+        "HasOwnership": false,
+        "HasAlliances": false,
+        "HasTraffic": true,
+        "HasFinancials": false,
+        "HasAirlines": false,
+        "HasAircraft": false,
+        "HasCapabilities": false,
+        "HasClients": false,
+        "ContentIndices": [
+            434,
+            501
+        ]
+    },
+    {
+        "TargetText": "LIAT",
+        "OrganisationId": -803,
+        "Iata": "LI",
+        "Type": "Airline",
+        "HasFleets": true,
+        "HasRoutes": true,
+        "HasMroData": true,
+        "HasPersonnel": true,
+        "HasOwnership": true,
+        "HasAlliances": true,
+        "HasTraffic": true,
+        "HasFinancials": false,
+        "HasAirlines": false,
+        "HasAircraft": false,
+        "HasCapabilities": false,
+        "HasClients": false,
+        "ContentIndices": [
+            280
+        ]
+    }
+]
+
+
+-- 
+/Geography/Regions
+Gets a list of regions and associated countries
+
+**Response**
+
+* `Id`: The unique identifier of the region
+* `Name`: The name of the region or country
+* `Countries`: A list of countries if this is a region
+
+--
+
+
+GET /v1/Geography/Regions
+< 200
+< Content-Type: application/json
+{"Regions":[{"Id":3,"Name":"Asia Pacific","Countries":[{"Id":10213,"Name":"Afghanistan"},{"Id":10248,"Name":"American Samoa"},{"Id":10056,"Name":"Australia"},{"Id":10058,"Name":"Bangladesh"},{"Id":10268,"Name":"Bhutan"},{"Id":10153,"Name":"Brunei"},{"Id":10204,"Name":"Cambodia"},{"Id":10069,"Name":"China"},{"Id":10249,"Name":"Cook Islands"},{"Id":10265,"Name":"East Timor"},{"Id":10102,"Name":"Fiji"},{"Id":10081,"Name":"French Polynesia"},{"Id":10165,"Name":"Guam"},{"Id":10108,"Name":"Hong Kong"},{"Id":10113,"Name":"India"},{"Id":10111,"Name":"Indonesia"},{"Id":10118,"Name":"Japan"},{"Id":10122,"Name":"Kazakhstan"},{"Id":10244,"Name":"Kiribati"},{"Id":10226,"Name":"Kyrgyzstan"},{"Id":10234,"Name":"Laos"},{"Id":10127,"Name":"Macau"},{"Id":10131,"Name":"Malaysia"},{"Id":10185,"Name":"Maldives"},{"Id":10258,"Name":"Marshall Islands"},{"Id":10270,"Name":"Micronesia"},{"Id":10206,"Name":"Mongolia"},{"Id":10049,"Name":"Multi-National (Asia)"},{"Id":10250,"Name":"Myanmar"},{"Id":10246,"Name":"Nauru"},{"Id":10152,"Name":"Nepal"},{"Id":10158,"Name":"New Caledonia"},{"Id":10134,"Name":"New Zealand"},{"Id":10279,"Name":"Norfolk Island"},{"Id":10240,"Name":"North Korea"},{"Id":10177,"Name":"Northern Mariana Islands"},{"Id":10139,"Name":"Pakistan"},{"Id":10262,"Name":"Palau"},{"Id":10138,"Name":"Papua New Guinea"},{"Id":10137,"Name":"Philippines"},{"Id":10251,"Name":"Samoa"},{"Id":10145,"Name":"Singapore"},{"Id":10189,"Name":"Solomon Islands"},{"Id":10120,"Name":"South Korea"},{"Id":10124,"Name":"Sri Lanka"},{"Id":10150,"Name":"Taiwan"},{"Id":10257,"Name":"Tajikistan"},{"Id":10146,"Name":"Thailand"},{"Id":10261,"Name":"Tonga"},{"Id":10222,"Name":"Turkmenistan"},{"Id":10026,"Name":"United States Minor Outlying Islands"},{"Id":10042,"Name":"Unknown Asian Country"},{"Id":10201,"Name":"Uzbekistan"},{"Id":10227,"Name":"Vanuatu"},{"Id":10280,"Name":"Vietnam"}]},{"Id":4,"Name":"Europe","Countries":[{"Id":10006,"Name":"Aland Islands"},{"Id":10231,"Name":"Albania"},{"Id":10252,"Name":"Andorra"},{"Id":10218,"Name":"Armenia"},{"Id":10096,"Name":"Austria"},{"Id":10057,"Name":"Azerbaijan"},{"Id":10194,"Name":"Belarus"},{"Id":10097,"Name":"Belgium"},{"Id":10224,"Name":"Bosnia-Herzegovina"},{"Id":10059,"Name":"Bulgaria"},{"Id":10109,"Name":"Croatia"},{"Id":10085,"Name":"Cyprus"},{"Id":10071,"Name":"Czech Republic"},{"Id":10072,"Name":"Czechoslovakia"},{"Id":10074,"Name":"Denmark"},{"Id":10043,"Name":"East Germany"},{"Id":10086,"Name":"Estonia"},{"Id":10073,"Name":"Faroe Islands"},{"Id":10087,"Name":"Finland"},{"Id":10095,"Name":"France"},{"Id":10187,"Name":"Georgia"},{"Id":10098,"Name":"Germany"},{"Id":10211,"Name":"Gibraltar"},{"Id":10092,"Name":"Greece"},{"Id":10075,"Name":"Greenland"},{"Id":10110,"Name":"Hungary"},{"Id":10115,"Name":"Iceland"},{"Id":10101,"Name":"Ireland"},{"Id":10099,"Name":"Italy"},{"Id":10125,"Name":"Latvia"},{"Id":10067,"Name":"Liechtenstein"},{"Id":10196,"Name":"Lithuania"},{"Id":10093,"Name":"Luxembourg"},{"Id":10167,"Name":"Macedonia"},{"Id":10083,"Name":"Malta"},{"Id":10186,"Name":"Moldova"},{"Id":10089,"Name":"Monaco"},{"Id":10274,"Name":"Montenegro"},{"Id":10038,"Name":"Multi-National (Europe)"},{"Id":10100,"Name":"Netherlands"},{"Id":10133,"Name":"Norway"},{"Id":10140,"Name":"Poland"},{"Id":10094,"Name":"Portugal"},{"Id":10157,"Name":"Romania"},{"Id":10142,"Name":"Russia"},{"Id":10088,"Name":"San Marino"},{"Id":10214,"Name":"Serbia"},{"Id":10091,"Name":"Slovakia"},{"Id":10082,"Name":"Slovenia"},{"Id":10090,"Name":"Spain"},{"Id":10144,"Name":"Sweden"},{"Id":10066,"Name":"Switzerland"},{"Id":10148,"Name":"Turkey"},{"Id":10151,"Name":"Ukraine"},{"Id":10103,"Name":"United Kingdom"},{"Id":10045,"Name":"Unknown CIS Country"},{"Id":10039,"Name":"Unknown European Country"},{"Id":10031,"Name":"USSR"},{"Id":10035,"Name":"Yugoslavia"}]}]}
+
+
+
+--
+/Navigation/Info
+Returns premium navigation items.
+
+**Request**
+
+* `apiToken`: The API key for the user making the request
+
+**Response**
+
+ * `AscendOnlineFleetsUrl`: The link to AscendOnlineFleets if the user has this subscription
+ * `AscendOnlineValuesUrl`: The link to AscendOnlineValues if the user has this subscription
+ * `AviationExchangeUrl`: The link to AviationExchange if the user has this subscription
+ * `FgProMyDashboardUrl`: The Link to Flightglobal Pro user dashboard if the user has this subscription
+ * `UserEmail`: The users email for Ascend or vIPER
+ * `Preferences`
+    * `FirstTime` : Either true or false  `Designed for the dashboard`
+--
+
+
+GET  /v1/Navigation/Info?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+    "AscendOnlineFleetsUrl": "http://ascend.flightglobal.com//Home/FireBirdSearch.aspx?N=0&amp;sUrl=0",
+    "AscendOnlineValuesUrl": "http://ascend.flightglobal.com//V1/V1Home.aspx?N=0&amp;sUrl=0",
+    "AviationExchangeUrl": "http://ascend.flightglobal.com//AviationExchange/Home/AscendExchangeLanding.aspx",
+    "FgProUrl": "http:/dashboard.flightglobal.com",
+    "UserEmail": "username@flightglobal.com",
+    "Preferences": {
+        "FirstTime": true
+    }
+    
+}
+
+--
+/Search/Composite
+Returns search results from multiple sources
+
+**Request**
+
+* `apiToken`: The API key for the user making the request
+* `SearchText`: The keyword to search on
+* `Skip`: For paging, allows you to define the number of items to skip in the results
+* `Take`: For paging, allows you to define the size of the page
+* `IncludeArticles`: Return news search results
+* `IncludeCompanies`: Return company search results
+* `IncludeDataAlerts`: Return relevant data alerts
+
+**Response**
+
+* `NewsResults`: Article search results (see /Articles/Search for sample response)
+* `CompanyResults`: Company search results (see /Organisation/Search for sample response)
+* `AlertsResults`: Data alert search results (see /Alerts/Search for sample response)
+--
+
+GET  /v1/Search/Composite?apiToken=00000000-0000-0000-0000-000000000001&SearchText=Keyword&IncludeArticles=true&IncludeCompanies=False&Skip=0&Take=1
+< 200
+< Content-Type: application/json
+{
+    "NewsResults": {
+        "TotalResults": 1000.
+        "News": [
+            {
+                "Id": 111111,
+                "Title": "This is the title of the news item",
+                "Intro": "This is an introduction",
+                "Subscription": "Pro",
+                "PublicationDate": "2013-12-25T00:00:01",
+                "Thumbnail": null,
+                "LeadSections": [],
+                "PrimaryOrganisation": {
+                        "Id": -1,
+                        "TailfinLogo": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/3238.png",
+                        "IATACode": "XX",
+                        "Type": "Airline"
+                }
+            }
+        ]
+    },
+    "CompanyResults": {
+        "Total": 10,
+        "Results": [
+            {
+                "OrganisationId": -22777,
+                "Name": "Brussels Airlines",
+                "Type": "Airline",
+                "Country": "Belgium",
+                "Region": "Europe"
+            }
+        ]
+    },
+    "AlertResults": {
+        "TotalResults" : 0,
+        "OrganisationFleetAlerts": {
+            "Total": 0,
+            "Results":[
+            {
+                "ContentId": 3065,
+                "Title": "10 FIRM ORDERS",
+                "Type": "Order",
+                "SubType": "Order",
+                "AircraftCount": 10,
+                "EventDate": "2013-09-04T00:00:00Z",
+                "PublishedDate": "2013-09-04T14:58:59Z",
+                "ManagerOrganisationId": 7089612,
+                "ManagerOrganisationName": "Delta Air Lines",
+                "ManagerOrganisationUrl": "http://pro.flightglobal.com/Pages/Profiles/Airlines/FleetSummary.aspx?AirID=-571",
+                "OperatorId": 7089612,
+                "OperatorName": "Delta Air Lines",
+                "Builder": "Airbus",
+                "Series": "A330-300",
+                "EngineType": "General Electric CF6 80E1A4B",
+                "TailfinUrl": "http://d3i2yofat64uvr.cloudfront.net/images/tailfin-logos/3238.png",
+                "TailfinDescription": "Delta Air LinesTailfin Logo",
+                "DeliveryDate": "2015-03-15T00:00:00Z"
+            ]}
+        },
+        "OrganisationStatusAlerts": {
+            "Total": 0,
+            "Results":[
+            {
+                "OrganisationId": 1534107506,
+                "Title": "New Start-up Announced!",
+                "FormedDate": "2013-04-08T16:26:13.773",
+                "PublishedDate": "2013-04-18T16:26:13.807",
+                "Enrichments": [],
+                "IsEstimated": true,
+                "OrganisationName": "Max Air",
+                "OrganisationAlertType": "NewStartupAnnounced"
+            }
+        ]},
+ 	    "OrganisationPersonnelAlerts": {
+            "Total": 0,
+            "Results":[
+            {
+            "OrganisationId": 123456,
+            "OrganisationName": "British Airways",
+            "Title": "Mr",
+            "FirstName": "Tom",
+            "LastName": "Jones",
+            "ActualJobTitle": "Chief Exec Officer",
+            "EmployedFromDate": "2013-10-30T00:00:00",
+            "PublishedDate": "2013-10-30T00:00:00",
+            "PersonnelAlertType" : "PersonnelAdded"
+        ]}}
+        
+    }
+}
+
+--
+/Search/AutoSuggest
+Returns suggested entities (Organisations, Cities, Airports) based on text being passed in
+
+**Request**
+
+* `text`: The keyword to search on
+* `type`: The type of entity to filter by, can be `Airport`, `City`, `Organisation`.  Defaults to all.
+
+**Response**
+
+ * `Suggestions`: Array of matching entities 
+    * `Text`: The name of the entity being suggested
+    * `Type`: The type of the entity, one of `Airport`, `City`, `Organisation`
+    * `Id`: The identifier of the entity, such as organisation id or city id
+--
+
+GET  /v1/Search/AutoSuggest?text=A&type=cityandairport
+< 200
+< Content-Type: application/json
+{
+    "Suggestions": [
+		{ "Text":"Los Angeles International [LAX] US", "Type":"Airport", "Id":-13058 },
+		{ "Text":"Barcelona [BLA] VE", "Type":"City", "Id":20729 },
+		{ "Text":"Barcelona [BLA] ES", "Type":"City", "Id":35176 }
+    ]
+}
+
+
+GET  /v1/Search/AutoSuggest?text=Brazil&type=Org
+< 200
+< Content-Type: application/json
+{
+    "Suggestions": [
+		{ "Text":"UTAir Brazil", "Type":"Org", "Id":464607 }
+    ]
+}
+
+GET  /v1/Search/AutoSuggest?text=LA&Type=City
+< 200
+< Content-Type: application/json
+{
+    "Suggestions": [
+		{ "Text":"Barcelona [BLA] VE", "Type":"City", "Id":20729 },
+		{ "Text":"Barcelona [BLA] ES", "Type":"City", "Id":35176 },
+    ]
+}
+
+
+--
+
+#INTERNAL
+Unused methods or methods to be made internal
+--
+
+--
+/Subscription
+- RW Gets a list of subscriptions for the current user, by subscription provider
+
+**Request**
+
+* `apiToken`: The API token of the current user
+
+**Response**
+
+* `Provider`: Name of the A&E provider such as Viper or ASO
+* `Subscriptions`: A list of subscriptions from the provider for this user
+
+
+--
+
+GET /v1/Subscription/?token=00000000-0000-0000-0000-000000000001
+< 200 
+< Content-Type: application/json
+[
+{
+Provider: "Viper",
+Subscriptions: [
+"Standard MRO Research",
+"Standard MRO Briefing",
+"Print",
+"Download",
+"Premium MRO Research",
+"Premium MRO Briefing",
+"Premium MRO Print",
+"Premium MRO Download",
+"Flightglobal AB Premium Data",
+"Flightglobal CapStats",
+"Flightglobal AirportCharges",
+"Latin America Polyvinyl Chloride",
+"Latin America Polyvinyl Chloride Historical Data",
+"Network Analysis",
+"ART Product Item 1",
+"Print",
+"Download",
+"Premium Network Research",
+"Premium Network Briefing",
+"Premium Network Print",
+"Premium Network Download",
+"Network Analysis",
+"Flightglobal AirportCharges",
+"Flightglobal CapStats",
+"Premium Network Briefing",
+"Premium Network Print",
+"Premium Network Download"
+]
+},
+{
+Provider: "Aso",
+Subscriptions: [
+"Fleets",
+"Values",
+"AviationExchange"
+]
+}
+]
+
+
+Example of an invalid user's subscriptions
+GET /v1/Subscription/?token=00000000-0000-0000-0000-000000000000
+< 404
+
+
+
+--
+/Analytics/GwaTags
+Returns a list of GWA tags for analytics.
+
+**Request**
+* `apiToken`: The API token of the current user
+
+**Response**
+
+* `GwaUserEntitlement`: Text indicating the user's entitlements
+* `GwaProductType`: Text indicating the products the user is entitled to
+* `GwaCustomerType`: The type of the customer. Possible values are ???
+* `GwaUserId`: The customer identifier guid in format 00000000-0000-0000-0000-000000000000
+* `GwaAuthStatus: Whether the user is logged in
+
+--
+
+RW Gwa Tags
+GET /v1/Analytics/GwaTags?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{"GwaAuthStatus":"logged in","GwaUserID":"e170b48b-cba4-4a26-8549-85a22c13f788","GwaUserEntitlement":"Flightglobal,Premium,Standard","GwaCustomerType":"Subscriber,Trial","GwaProductType":"Flightglobal AB Premium Data,Flightglobal AirportCharges,Flightglobal CapStats,Flightglobal Flightmaps Analytics,Premium ATS Research Product,Premium Finance Research Product,Premium MRO Research Product,Premium Network Research Product,Standard MRO Trial Product"}
+
