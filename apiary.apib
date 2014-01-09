@@ -2981,7 +2981,8 @@ Returns premium navigation items.
  * `FgProMyDashboardUrl`: The Link to Flightglobal Pro user dashboard if the user has this subscription
  * `UserEmail`: The users email for Ascend or vIPER
  * `Preferences`
-    * `FirstTime` : Either true or false  `Designed for the dashboard`
+ * `FirstTime` : Either true or false  `Designed for the dashboard`
+
 --
 
 
@@ -2994,11 +2995,9 @@ GET  /v1/Navigation/Info?apiToken=00000000-0000-0000-0000-000000000001
     "AviationExchangeUrl": "http://ascend.flightglobal.com//AviationExchange/Home/AscendExchangeLanding.aspx",
     "FgProUrl": "http:/dashboard.flightglobal.com",
     "UserEmail": "username@flightglobal.com",
-    "Preferences": {
-        "FirstTime": true
-    }
-    
+    "Preferences": { "FirstTime": true }
 }
+
 
 --
 /Search/Composite
@@ -3020,6 +3019,7 @@ Returns search results from multiple sources
 * `CompanyResults`: Company search results (see /Organisation/Search for sample response)
 * `AlertsResults`: Data alert search results (see /Alerts/Search for sample response)
 --
+
 
 GET  /v1/Search/Composite?apiToken=00000000-0000-0000-0000-000000000001&SearchText=Keyword&IncludeArticles=true&IncludeCompanies=False&Skip=0&Take=1
 < 200
@@ -3111,7 +3111,6 @@ GET  /v1/Search/Composite?apiToken=00000000-0000-0000-0000-000000000001&SearchTe
             "PublishedDate": "2013-10-30T00:00:00",
             "PersonnelAlertType" : "PersonnelAdded"
         ]}}
-        
     }
 }
 
@@ -3130,8 +3129,8 @@ Returns suggested entities (Organisations, Cities, Airports) based on text being
     * `Text`: The name of the entity being suggested
     * `Type`: The type of the entity, one of `Airport`, `City`, `Organisation`
     * `Id`: The identifier of the entity, such as organisation id or city id
---
 
+--
 GET  /v1/Search/AutoSuggest?text=A&type=cityandairport
 < 200
 < Content-Type: application/json
@@ -3162,7 +3161,6 @@ GET  /v1/Search/AutoSuggest?text=LA&Type=City
 		{ "Text":"Barcelona [BLA] ES", "Type":"City", "Id":35176 },
     ]
 }
-
 
 --
 
