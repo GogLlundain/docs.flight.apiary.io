@@ -822,7 +822,7 @@ Gets a list of news items with their article pages
 * `take`: For paging. The size of the page
 * `earliestDate`: Gets articles after this date time (inclusive)
 * `latestDate`: Gets articles before this date time (inclusive) 
-* `keywords`: Comma separated keywords to search on
+* `keywords`: Text to search for in Idol. This text will be converted into idol query. Text within quotes will be treated as Exact Match. Commas in text will serve as ORing and Space will server as ANDing. E.g. keywords = ["British, Airways" Europe, Asia] will be served to Idol as ["British, Airways" AND "Europe" OR "Asia"]
 * `titleOnly`: Restricts the keyword search to the title of the articles, not the whole body
 * `organisations`: Comma separated organisation ids to search on (-456 or -605)
 * `categories`: -- SEE Articles/Categories for The Category Id's to send 
