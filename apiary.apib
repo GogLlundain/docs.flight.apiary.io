@@ -3356,6 +3356,68 @@ GET  /v1/Network/Summary/TotalFlights?apiToken=00000000-0000-0000-0000-000000000
 
 
 --
+/Network/Summary/FlightsByRegion
+Returns the current month total flight information for grouped by region
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+
+**Response**
+
+ * `FlightsByRegion`: Array of flight information
+    * `Title`: The name of the region 
+    * `Value`: The physical value to report
+    * `Scale`: Any scale to use with the value
+    * `Percentage`: The percentage change, year on year
+
+--
+GET  /v1/Network/Summary/FlightsByRegion?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+    "FlightsByRegion": [
+        {
+		    "Title":"North America", 
+		    "Value":"848",
+		    "Scale":"K",
+		    "Percentage":0
+		},
+		{
+		    "Title":"Latin America", 
+		    "Value":"207",
+		    "Scale":"K",
+		    "Percentage":1
+		},
+		{
+		    "Title":"Africa", 
+		    "Value":"81",
+		    "Scale":"K",
+		    "Percentage":6
+		},
+		{
+		    "Title":"Middle East", 
+		    "Value":"77",
+		    "Scale":"K",
+		    "Percentage":7
+		},
+		{
+		    "Title":"Europe", 
+		    "Value":"554",
+		    "Scale":"K",
+		    "Percentage":1
+		},
+		{
+		    "Title":"Asia Pacific", 
+		    "Value":"776",
+		    "Scale":"K",
+		    "Percentage":10
+		}
+    ]
+}
+
+
+--
 
 #INTERNAL
 Unused methods or methods to be made internal
