@@ -3418,6 +3418,82 @@ GET  /v1/Network/Summary/FlightsByRegion?apiToken=00000000-0000-0000-0000-000000
 
 
 --
+/Network/Analysis
+Returns the current month detailed flight information, optionally by origin
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `origin`: The origin continent to filter by
+
+**Response**
+
+ * `Networks`: Array of network information
+    * `CarrierCode`: The carrier code eg 2P
+    * `OriginCode`: The origin code of the network
+    * `OriginCountry`: The origin country of the network
+    * `OriginContinent`: The origin continent of the network
+    * `DestinationCode`: The destination code of the network
+    * `DestinationCountry`: The destination country of the network
+    * `DestinationContinent`: The destination continent of the network
+    * `FlightsPrevYear`: The number of flights in the current calendar month last year
+    * `FlightsThisYear`: The number of flights in the current calendar month this year
+    * `FlightsChange`: the difference between last year and this year
+
+--
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+    "Networks": [
+        {
+		    "CarrierCode":"2P", 
+		    "OriginCode":"DXB",
+		    "OriginCountry":"United Arab Emirates",
+		    "OriginContinent":"Middle East",
+		    "DestinationCode":"MNL",
+		    "DestinationCountry":"Phillipines",
+		    "DestinationContinent":"Asia",
+		    "FlightsPrevYear":"0",
+		    "FlightsThisYear":"17",
+		    "FlightsChange":"17",
+		},
+		{
+		    "CarrierCode":"4D", 
+		    "OriginCode":"LHX",
+		    "OriginCountry":"England",
+		    "OriginContinent":"Europe",
+		    "DestinationCode":"MNL",
+		    "DestinationCountry":"Phillipines",
+		    "DestinationContinent":"Asia",
+		    "FlightsPrevYear":"3",
+		    "FlightsThisYear":"10",
+		    "FlightsChange":"7",
+		}
+    ]
+}
+
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&origin=MiddleEast
+< 200
+< Content-Type: application/json
+{
+    "Networks": [
+        {
+		    "CarrierCode":"2P", 
+		    "OriginCode":"DXB",
+		    "OriginCountry":"United Arab Emirates",
+		    "OriginContinent":"Middle East",
+		    "DestinationCode":"MNL",
+		    "DestinationCountry":"Phillipines",
+		    "DestinationContinent":"Asia",
+		    "FlightsPrevYear":"0",
+		    "FlightsThisYear":"17",
+		    "FlightsChange":"17",
+		}
+    ]
+}
+
+--
 
 #INTERNAL
 Unused methods or methods to be made internal
