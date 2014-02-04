@@ -3304,6 +3304,57 @@ GET  /v1/Search/AutoSuggest?text=LA&Type=City
     ]
 }
 
+
+--
+/Network/Summary/TotalFlights
+Returns the current month total flight information for flights, seat capacity, destinations and airlines
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+
+**Response**
+
+ * `TotalFlights`: Array of flight information
+    * `Title`: The name of the entity 
+    * `Value`: The physical value to report
+    * `Scale`: Any scale to use with the value
+    * `Percentage`: The percentage change, year on year
+
+--
+GET  /v1/Network/Summary/TotalFlights?apiToken=00000000-0000-0000-0000-000000000001
+< 200
+< Content-Type: application/json
+{
+    "TotalFlights": [
+        {
+		    "Title":"Flights", 
+		    "Value":"2.541",
+		    "Scale":"M",
+		    "Percentage":3
+		},
+		{
+		    "Title":"Seat Capacity", 
+		    "Value":"339.844",
+		    "Scale":"M",
+		    "Percentage":6
+		},
+		{
+		    "Title":"Destinations", 
+		    "Value":"4917",
+		    "Scale":"",
+		    "Percentage":3
+		},
+		{
+		    "Title":"Airlines", 
+		    "Value":"1356",
+		    "Scale":"",
+		    "Percentage":6
+		}
+    ]
+}
+
+
 --
 
 #INTERNAL
