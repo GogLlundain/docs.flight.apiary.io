@@ -2180,6 +2180,7 @@ GET /v1/Airports/Information{?apiToken,id}
 	* `CarrierTypes`:
 		* `Type`: The carrier type
 		* `Count`: How many carries of this type
+		* `Color`: The colour associated with the type
 
 --
 GET /v1/Airports/OrganisationSummary{?apiToken,id,month,year}
@@ -2202,10 +2203,12 @@ GET /v1/Airports/OrganisationSummary{?apiToken,id,month,year}
 		"AsksDeltaPercentage": 5,
 		"CarrierTypes": [{
 			"Type": "Mainline",
-			"Count": 78
+			"Count": 78,
+			"Color": "#e10000"
 		}, {
 			"Type": "Low Cost",
-			"Count": 4
+			"Count": 4,
+			"Color": "#00e100"
 		}]
 	}
 }
