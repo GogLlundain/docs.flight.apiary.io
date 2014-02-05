@@ -2180,7 +2180,6 @@ GET /v1/Airports/Information{?apiToken,id}
 	* `CarrierTypes`:
 		* `Type`: The carrier type
 		* `Count`: How many carries of this type
-		* `Color`: The colour associated with the type
 
 --
 GET /v1/Airports/AMISummary{?apiToken,id,month,year}
@@ -2256,7 +2255,7 @@ GET /v1/Airports/AMISummary{?apiToken,id,month,year}
 			* `CountryServed`: The name of the country in which the airport is located
 
 --
-GET /v1/Airports/OrganisationDetails{?apiToken,id,month,year}
+GET /v1/Airports/AMIOrganisationDetails{?apiToken,id,month,year}
 < 200
 < Content-Type: application/json
 {
@@ -2297,6 +2296,69 @@ GET /v1/Airports/OrganisationDetails{?apiToken,id,month,year}
 					"AskSharePercentage": 41
 				}
 			}]
+		}]
+	}
+}
+
+--
+/Airports/AMIRouteDetails
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The id of the airport
+* `month`: The month we're interested in e.g. 'February'
+* `year`: The year we're interested in
+
+**Response**
+
+* `AirportAMIRouteDetails`
+	* `RequestedDate`: The month of the requested data
+	* `PreviousYearDate`: The month of the previous year data
+	* `Results`:
+		* `AirportId`: The unique identifier for the destination airport
+		* `AirportUrl`: The URL to view the airport's data
+		* `Iata`: The IATA of the destination airport
+		* `CountryServed`: The country of the destination airport
+		* `Flights`: 
+		    * `RequestedDate`: The number of flights for the request month
+		    * `PreviousYear`: The number of flights for the requested month the previous year
+		    * `DeltaPercentage`: The percentage difference in flights between the previous year and the requested month
+		* `Seats`: 
+		    * `RequestedDate`: The number of seats for the request month
+		    * `PreviousYear`: The number of seats for the requested month the previous year
+		    * `DeltaPercentage`: The percentage difference in seats between the previous year and the requested month
+        * `Asks`: 
+		    * `RequestedDate`: The number of ASKs for the request month
+		    * `PreviousYear`: The number of ASKs for the requested month the previous year
+		    * `DeltaPercentage`: The percentage difference in ASKs between the previous year and the requested month
+--
+GET /v1/Airports/AMIRouteDetails{?apiToken,id,month,year}
+< 200
+< Content-Type: application/json
+{
+	"AirportAMIRouteDetails": {
+		"RequestedDate": "2013-11-01",
+		"PreviousYearDate": "2013-11-01",
+		"Results": [{
+			"AirportId": 100,
+			"AirportUrl": "",
+			"Iata": "DUS",
+			"CountryServed": "Germany",
+			"Flights": {
+			    "RequestedMonth": 22,
+			    "PreviousYear": 21,
+			    "DeltaPercentage": 5
+			},
+			"Seats": {
+			    "RequestedMonth": 3969,
+			    "PreviousYear": 4158,
+			    "DeltaPercentage": 5
+			},
+			"Asks": {
+			    "RequestedMonth": 29,
+			    "PreviousYear": 31,
+			    "DeltaPercentage": 5
+			}
 		}]
 	}
 }
