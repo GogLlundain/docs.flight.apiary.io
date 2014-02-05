@@ -3426,62 +3426,57 @@ GET  /v1/Network/Summary/TotalFlights?apiToken=00000000-0000-0000-0000-000000000
 
 
 --
-/Network/Summary/FlightsByRegion
-Returns the current month total flight information for grouped by region
+/Network/FlightsByRegionSummary
+Returns the total flight information for a given month, grouped by region
 
 **Request**
 
 * `apiToken`: The API token of the user making the request.
+* `month`: The month to retrieve results for
+* `year`: The year to retrieve results for
 
 **Response**
 
  * `FlightsByRegion`: Array of flight information
-    * `Title`: The name of the region 
-    * `Value`: The physical value to report
-    * `Scale`: Any scale to use with the value
-    * `Percentage`: The percentage change, year on year
+    * `Region`: The name of the region 
+    * `NumberOfFlights`: The physical value to report
+    * `PercentChange`: The percentage change, year on year
 
 --
-GET  /v1/Network/Summary/FlightsByRegion?apiToken=00000000-0000-0000-0000-000000000001
+GET  /v1/Network/FlightsByRegionSummary?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013
 < 200
 < Content-Type: application/json
 {
     "FlightsByRegion": [
         {
-		    "Title":"North America", 
-		    "Value":"848",
-		    "Scale":"K",
-		    "Percentage":0
+		    "Region":"North America", 
+		    "NumberOfFlights":"848000",
+		    "PercentChange":0
 		},
 		{
-		    "Title":"Latin America", 
-		    "Value":"207",
-		    "Scale":"K",
-		    "Percentage":1
+		    "Region":"Latin America", 
+		    "NumberOfFlights":"207000",
+		    "PercentChange":1
 		},
 		{
-		    "Title":"Africa", 
-		    "Value":"81",
-		    "Scale":"K",
-		    "Percentage":6
+		    "Region":"Africa", 
+		    "NumberOfFlights":"81000",
+		    "PercentChange":6
 		},
 		{
-		    "Title":"Middle East", 
-		    "Value":"77",
-		    "Scale":"K",
-		    "Percentage":7
+		    "Region":"Middle East", 
+		    "NumberOfFlights":"77000",
+		    "PercentChange":7
 		},
 		{
-		    "Title":"Europe", 
-		    "Value":"554",
-		    "Scale":"K",
-		    "Percentage":1
+		    "Region":"Europe", 
+		    "NumberOfFlights":"554000",
+		    "PercentChange":1
 		},
 		{
-		    "Title":"Asia Pacific", 
-		    "Value":"776",
-		    "Scale":"K",
-		    "Percentage":10
+		    "Region":"Asia Pacific", 
+		    "NumberOfFlights":"776000",
+		    "PercentChange":10
 		}
     ]
 }
@@ -3489,12 +3484,15 @@ GET  /v1/Network/Summary/FlightsByRegion?apiToken=00000000-0000-0000-0000-000000
 
 --
 /Network/Analysis
-Returns the current month detailed flight information, optionally by origin
+Returns the detailed flight information for a given month, optionally by origin
 
 **Request**
 
 * `apiToken`: The API token of the user making the request.
+* `month`: The month to retrieve results for
+* `year`: The year to retrieve results for
 * `origin`: The origin continent to filter by
+  (`AsiaPacific`, `Europe`, `Africa`, `MiddleEast`, `LatinAmerica`, `NorthAmerica`)  
 
 **Response**
 
@@ -3511,7 +3509,7 @@ Returns the current month detailed flight information, optionally by origin
     * `FlightsChange`: the difference between last year and this year
 
 --
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013
 < 200
 < Content-Type: application/json
 {
@@ -3543,7 +3541,7 @@ GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001
     ]
 }
 
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&origin=MiddleEast
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&origin=MiddleEast
 < 200
 < Content-Type: application/json
 {
