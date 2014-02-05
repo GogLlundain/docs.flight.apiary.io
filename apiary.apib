@@ -2214,6 +2214,73 @@ GET /v1/Airports/OrganisationSummary{?apiToken,id,month,year}
 }
 
 --
+/Airports/AMISummary
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The id of the airport
+* `month`: The month we're interested in e.g. February = 2
+* `year`: The year we're interested in
+
+**Response**
+
+* `AirportAMISummary`
+	* `StartDate`: The beginning range of the summary data
+	* `EndDate`: The end range of the summary data
+	* `Organisations`: The number of airlines served from this airport
+	* `OrganisationsDelta`: The year-on-year change from last year
+	* `Flights`: The number of distinct flights from this airport
+	* `FlightsDeltas`: The year-on-year change from last year
+	* `FlightsDeltasPercentage`: The year-on-year change from last year expressed as a percentage
+	* `Seats`: The number of seats available in this period
+	* `SeatsDelta`: The year-on-year change from last year
+	* `SeatsDeltaPercentage`: The year-on-year change from last year expressed as a percentage
+	* `Asks`: The number of seats per kilometre
+	* `AsksDelta`: The year-on-year change from last year
+	* `AsksDeltaPercentage`: The year-on-year change from last year expressed as a percentage	
+	* `CarrierTypes`:
+		* `Type`: The carrier type
+		* `Count`: How many carries of this type
+		* `Color`: The colour associated with the type
+
+--
+GET /v1/Airports/AMISummary{?apiToken,id,month,year}
+< 200
+< Content-Type: application/json
+{
+	"AirportAMISummary": {
+		"StartDate": "2013-11-01",
+		"EndDate": "2012-11-01",
+		"Organisations": 82,
+		"OrganisationsDelta": 3,
+		"Flights": 19500,
+		"FlightsDeltas": 19600,
+		"FlightsDeltasPercentage": 4,
+		"Seats": 386000000,
+		"SeatsDelta": 385000000,
+		"SeatsDeltaPercentage": 6,
+		"Asks": 15000000000,
+		"AsksDelta": 14900000000,
+		"AsksDeltaPercentage": 5,
+		"Destinations": 164,
+		"DestinationsDelta": 5,
+		"Countries": 77,
+		"CountriesDelta": -2,
+		"Regions": 5,
+		"RegionsDelta": 0,
+		"CarrierTypes": [{
+			"Type": "Mainline",
+			"Count": 78,
+			"Color": "#e10000"
+		}, {
+			"Type": "Low Cost",
+			"Count": 4,
+			"Color": "#00e100"
+		}]
+	}
+}
+
+--
 /Airports/OrganisationDetails
 **Request**
 
