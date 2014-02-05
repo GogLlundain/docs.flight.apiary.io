@@ -3409,6 +3409,57 @@ GET  /v1/Network/Summary/TotalFlights?apiToken=00000000-0000-0000-0000-000000000
 
 
 --
+/Network/TotalFlights
+Returns the flight information for flights, seat capacity, destinations and airlines for a given month
+
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `month`: The month to retrieve results for
+* `year`: The year to retrieve results for
+
+**Response**
+
+ * `TotalFlights`: Flight information
+    * `Flights`: The total flight information
+        * `Total`: Number of flights
+        * `PercentChange`: Pencentage change
+    * `SeatCapacity`: The total seat information
+        * `Total`: Number of seats
+        * `PercentChange`: Percentage change
+    * `Destinations`: The total destination information
+        * `Total`: The number of destinations
+        * `PercentChange`: Percentage change
+    * `Airlines`: The total airline information
+        * `Total`: The number of airlines
+        * `PercentChange`: Percentage change
+
+--
+GET  /v1/Network/TotalFlights?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013
+< 200
+< Content-Type: application/json
+{
+    "TotalFlights": {
+        "Flights" : {
+		    "Total":2541000, 
+		    "PercentChange":3
+		},
+		"SeatCapacity" : { 
+		    "Total":3398440,
+		    "PercentChange":6
+		},
+		"Destinations" : { 
+		    "Total":4917,
+		    "PercentChange":3
+		},
+		"Airlines" : { 
+		    "Total":1356,
+		    "PercentChange":6
+		}
+    }
+}
+
+--
 /Network/FlightsByRegionSummary
 Returns the total flight information for a given month, grouped by region
 
