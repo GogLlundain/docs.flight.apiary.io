@@ -2153,7 +2153,7 @@ GET /v1/Airports/Information{?apiToken,id}
 }
 
 --
-/Airports/AMISummary
+/Airports/AmiSummary
 **Request**
 
 * `apiToken`: The API token of the user making the request.
@@ -2163,9 +2163,7 @@ GET /v1/Airports/Information{?apiToken,id}
 
 **Response**
 
-* `AirportAMISummary`
-	* `StartDate`: The beginning range of the summary data
-	* `EndDate`: The end range of the summary data
+* `AirportAmiSummary`
 	* `Organisations`: The number of airlines served from this airport
 	* `OrganisationsDelta`: The year-on-year change from last year
 	* `Flights`: The number of distinct flights from this airport
@@ -2182,13 +2180,11 @@ GET /v1/Airports/Information{?apiToken,id}
 		* `Count`: How many carries of this type
 
 --
-GET /v1/Airports/AMISummary{?apiToken,id,month,year}
+GET /v1/Airports/AmiSummary{?apiToken,id,month,year}
 < 200
 < Content-Type: application/json
 {
-	"AirportAMISummary": {
-		"StartDate": "2013-11-01",
-		"EndDate": "2012-11-01",
+	"AirportAmiSummary": {
 		"Organisations": 82,
 		"OrganisationsDelta": 3,
 		"Flights": 19500,
@@ -2217,7 +2213,7 @@ GET /v1/Airports/AMISummary{?apiToken,id,month,year}
 }
 
 --
-/Airports/AMIOrganisationDetails
+/Airports/AmiOrganisationDetails
 **Request**
 
 * `apiToken`: The API token of the user making the request.
@@ -2227,52 +2223,62 @@ GET /v1/Airports/AMISummary{?apiToken,id,month,year}
 
 **Response**
 
-* `AirportAMIOrganisationDetails`
-	* `DetailsDate`: The beginning range of the summary data
-	* `Results`:
-		* `OrganisationId`: The unique identifier for the organisation
-		* `OrganisationUrl`: The URL of the Airline summary page
-		* `Iata`: The airline's IATA code
-		* `Name`: The name of the airline
-		* `Type`: The type of the airline
-		* `GlobalAlliances`:
-			* `Name`: The Name of the Organisation
-			* `Image`: The Image Url Can Be Null
-			* `Url`: The Alliances' Url Can Be Null
-		* `Country`: The airline's domicile country
-		* `AirportOrganisationPeriodSummary`:
-			* `Flights`: The number of the flights in the period
-			* `FlightSharePercentage`: The percentage share of the flights for the period
-			* `Seats`: The number of seats in the period
-			* `SeatSharePercentage`: The percentage share of the seats for the period
-			* `Asks`: The number of seats per kilometre
-			* `AskSharePercentage`: The percentage share of the ASKs for the period
-		* `Airports`:
-			* `Id`: The unique identifier for the airport
-			* `SummaryUrl`: The airport's summary page URL
-			* `Iata`: The aiport's IATA code
-			* `CityServed`: The name of the city in which the airport is located
-			* `CountryServed`: The name of the country in which the airport is located
+* `AirportAmiOrganisationDetails`
+	* `OrganisationId`: The unique identifier for the organisation
+	* `OrganisationUrl`: The URL of the Airline summary page
+	* `Iata`: The airline's IATA code
+	* `Name`: The name of the airline
+	* `Type`: The type of the airline
+	* `GlobalAlliances`:
+		* `Name`: The Name of the Organisation
+		* `Image`: The Image Url Can Be Null
+		* `Url`: The Alliances' Url Can Be Null
+	* `Country`: The airline's domicile country
+	* `AirportOrganisationPeriodSummary`:
+		* `Flights`: The number of the flights in the period
+		* `FlightSharePercentage`: The percentage share of the flights for the period
+		* `Seats`: The number of seats in the period
+		* `SeatSharePercentage`: The percentage share of the seats for the period
+		* `Asks`: The number of seats per kilometre
+		* `AskSharePercentage`: The percentage share of the ASKs for the period
+	* `Airports`:
+		* `Id`: The unique identifier for the airport
+		* `SummaryUrl`: The airport's summary page URL
+		* `Iata`: The aiport's IATA code
+		* `CityServed`: The name of the city in which the airport is located
+		* `CountryServed`: The name of the country in which the airport is located
 
 --
-GET /v1/Airports/AMIOrganisationDetails{?apiToken,id,month,year}
+GET /v1/Airports/AmiOrganisationDetails{?apiToken,id,month,year}
 < 200
 < Content-Type: application/json
 {
-	"AirportAMIOrganisationDetails": {
-		"DetailsDate": "2013-11-01",
-		"Results": [{
-			"OrganisationId": 100,
-			"OrganisationUrl": "",
-			"Iata": "BA",
-			"Name": "British Airways",
-			"Type": "Mainline",
-			"GlobalAlliances": [{
-				"Name": "Eagle Airways",
-				"Image": "http://d3i2yofat64uvr.cloudfront.net/images/logos/2127.jpg",
-				"Url": "http://pro.flightglobal.com/Pages/Profiles/Airlines/Alliances.aspx?AirID=-588"
-			}],
-			"Country": "United Kingdom",
+	"AirportAmiOrganisationDetails": [{
+		"OrganisationId": 100,
+		"OrganisationUrl": "",
+		"Iata": "BA",
+		"Name": "British Airways",
+		"Type": "Mainline",
+		"GlobalAlliances": [{
+			"Name": "Eagle Airways",
+			"Image": "http://d3i2yofat64uvr.cloudfront.net/images/logos/2127.jpg",
+			"Url": "http://pro.flightglobal.com/Pages/Profiles/Airlines/Alliances.aspx?AirID=-588"
+		}],
+		"Country": "United Kingdom",
+		"AirportOrganisationPeriodSummary": {
+			"Flights": 9957,
+			"FlightSharePercentage": 52,
+			"Seats": 1872814,
+			"SeatSharePercentage": 48,
+			"Asks": 6124,
+			"AskSharePercentage": 41
+		},
+		"Airports": [{
+			"Id": 100,
+			"SummaryUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001",
+			"Iata": "DUS",
+			"CityServed": "Dusseldorf",
+			"CountryServed": "Germany",
 			"AirportOrganisationPeriodSummary": {
 				"Flights": 9957,
 				"FlightSharePercentage": 52,
@@ -2280,28 +2286,13 @@ GET /v1/Airports/AMIOrganisationDetails{?apiToken,id,month,year}
 				"SeatSharePercentage": 48,
 				"Asks": 6124,
 				"AskSharePercentage": 41
-			},
-			"Airports": [{
-				"Id": 100,
-				"SummaryUrl": "http://pro.flightglobal.com/pages/profiles/airports/airportsummary.aspx?AirID=-13001",
-				"Iata": "DUS",
-				"CityServed": "Dusseldorf",
-				"CountryServed": "Germany",
-				"AirportOrganisationPeriodSummary": {
-					"Flights": 9957,
-					"FlightSharePercentage": 52,
-					"Seats": 1872814,
-					"SeatSharePercentage": 48,
-					"Asks": 6124,
-					"AskSharePercentage": 41
-				}
-			}]
+			}
 		}]
-	}
+	}]
 }
 
 --
-/Airports/AMIRouteDetails
+/Airports/AmiRouteDetails
 **Request**
 
 * `apiToken`: The API token of the user making the request.
@@ -2311,56 +2302,49 @@ GET /v1/Airports/AMIOrganisationDetails{?apiToken,id,month,year}
 
 **Response**
 
-* `AirportAMIRouteDetails`
-	* `RequestedDate`: The month of the requested data
-	* `PreviousYearDate`: The month of the previous year data
-	* `Results`:
-		* `AirportId`: The unique identifier for the destination airport
-		* `AirportUrl`: The URL to view the airport's data
-		* `Iata`: The IATA of the destination airport
-		* `CountryServed`: The country of the destination airport
-		* `Flights`: 
-		    * `RequestedDate`: The number of flights for the request month
-		    * `PreviousYear`: The number of flights for the requested month the previous year
-		    * `DeltaPercentage`: The percentage difference in flights between the previous year and the requested month
-		* `Seats`: 
-		    * `RequestedDate`: The number of seats for the request month
-		    * `PreviousYear`: The number of seats for the requested month the previous year
-		    * `DeltaPercentage`: The percentage difference in seats between the previous year and the requested month
-        * `Asks`: 
-		    * `RequestedDate`: The number of ASKs for the request month
-		    * `PreviousYear`: The number of ASKs for the requested month the previous year
-		    * `DeltaPercentage`: The percentage difference in ASKs between the previous year and the requested month
+* `AirportAmiRouteDetails`
+	* `AirportId`: The unique identifier for the destination airport
+	* `AirportUrl`: The URL to view the airport's data
+	* `Iata`: The IATA of the destination airport
+	* `CountryServed`: The country of the destination airport
+	* `Flights`: 
+	    * `Count`: The number of flights for the request month
+	    * `PreviousCount`: The number of flights for the requested month the previous year
+	    * `DeltaPercentage`: The percentage difference in flights between the previous year and the requested month
+	* `Seats`: 
+	    * `Count`: The number of seats for the request month
+	    * `PreviousCount`: The number of seats for the requested month the previous year
+	    * `DeltaPercentage`: The percentage difference in seats between the previous year and the requested month
+    * `Asks`: 
+	    * `Count`: The number of ASKs for the request month
+	    * `PreviousCount`: The number of ASKs for the requested month the previous year
+	    * `DeltaPercentage`: The percentage difference in ASKs between the previous year and the requested month
 --
-GET /v1/Airports/AMIRouteDetails{?apiToken,id,month,year}
+GET /v1/Airports/AmiRouteDetails{?apiToken,id,month,year}
 < 200
 < Content-Type: application/json
 {
-	"AirportAMIRouteDetails": {
-		"RequestedDate": "2013-11-01",
-		"PreviousYearDate": "2013-11-01",
-		"Results": [{
-			"AirportId": 100,
-			"AirportUrl": "",
-			"Iata": "DUS",
-			"CountryServed": "Germany",
-			"Flights": {
-			    "RequestedMonth": 22,
-			    "PreviousYear": 21,
-			    "DeltaPercentage": 5
-			},
-			"Seats": {
-			    "RequestedMonth": 3969,
-			    "PreviousYear": 4158,
-			    "DeltaPercentage": 5
-			},
-			"Asks": {
-			    "RequestedMonth": 29,
-			    "PreviousYear": 31,
-			    "DeltaPercentage": 5
-			}
-		}]
-	}
+	"AirportAmiRouteDetails": {
+		"AirportId": 100,
+		"AirportUrl": "",
+		"Iata": "DUS",
+		"CountryServed": "Germany",
+		"Flights": {
+		    "Count": 22,
+		    "PreviousCount": 21,
+		    "DeltaPercentage": 5
+		},
+		"Seats": {
+		    "Count": 3969,
+		    "PreviousCount": 4158,
+		    "DeltaPercentage": 5
+		},
+		"Asks": {
+		    "Count": 29,
+		    "PreviousCount": 31,
+		    "DeltaPercentage": 5
+		}
+	}]
 }
 
 -- 
