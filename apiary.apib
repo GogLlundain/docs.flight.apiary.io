@@ -2391,6 +2391,58 @@ GET /v1/Airports/AmiRouteDetails{?apiToken,id,month,year}
 	}]
 }
 
+--
+/Airports/AmiAircraftDetails
+**Request**
+
+* `apiToken`: The API token of the user making the request.
+* `id`: The id of the airport
+* `month`: The month we're interested in e.g. 'February'
+* `year`: The year we're interested in
+
+**Response**
+
+* `AirportAmiRouteDetails`
+	* `AircraftId`: The unique identifier for the aircraft
+	* `Name`: The name of the aircraft
+	* `MarketGroup`: The market group type of the aircraft
+	* `AirlineCount`: The number of airlines at the airport operating the aircraft
+	* `AirportAircraftPeriodSummary`:
+    	* `FlightSharePecentage`: The percentage of flights from the airport for the aircraft type
+    	* `SeatSharePercentage`: The percentage of seats from the airport for the aircraft type
+    	* `AskSharePercentage`: The percentage of ASKs from the airport for the aircraft type
+    	* `Destinations`: The number of destinations for the aircraft type from the specified airport
+--
+GET /v1/Airports/AmiAircraftDetails{?apiToken,id,month,year}
+< 200
+< Content-Type: application/json
+{
+	"AirportAmiAircraftDetails": [{
+		"AircraftId": 100,
+		"Name": "Airbus A319",
+		"MarketGroup": "Narrowbody Jet",
+		"AirlineCount": 12,
+		"AirportAircraftPeriodSummary": {
+			"FlightSharePecentage": 39,
+			"SeatSharePercentage": 27,
+			"AskSharePercentage": 6,
+			"Destinations": 57
+		},
+		"Airlines": [{
+			"OrganisationId": 100,
+			"OrganisationUrl": "",
+			"Iata": "BA",
+			"Name": "British Airways",
+			"AirportAircraftPeriodSummary": {
+				"FlightSharePecentage": 39,
+				"SeatSharePercentage": 27,
+				"AskSharePercentage": 6,
+				"Destinations": 57
+			}
+		}]
+	}]
+}
+
 -- 
 /Airports/InfrastructureSummary
 **Request**
