@@ -2177,7 +2177,10 @@ GET /v1/Airports/Information{?apiToken,id}
 	* `AsksDeltaPercentage`: The year-on-year change from last year expressed as a percentage	
 	* `CarrierTypes`:
 		* `Type`: The carrier type
-		* `Count`: How many carries of this type
+		* `Count`: How many carries of this type fly from the airport
+	* `AircraftTypes`:
+		* `Type`: The aircraft type
+		* `Count`: How many carries of this type fly from the airport
 
 --
 GET /v1/Airports/AmiSummary{?apiToken,id,month,year}
@@ -2208,6 +2211,16 @@ GET /v1/Airports/AmiSummary{?apiToken,id,month,year}
 		}, {
 			"Type": "Low Cost",
 			"Count": 4
+		}],
+		"AircraftTypes": [{
+			"Type": "Widebody Jet",
+			"Count": 22
+		}, {
+			"Type": "Narrowbody Jet",
+			"Count": 20
+		}, {
+			"Type": "Regional Jet",
+			"Count": 3
 		}]
 	}
 }
