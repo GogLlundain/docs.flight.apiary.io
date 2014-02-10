@@ -3643,7 +3643,7 @@ Returns the detailed flight information for a given month, optionally by origin
         * `FlightsChange`: the difference between last year and this year
 
 --
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=0
+GET  /v1/Network/Analysis{?apiToken}&month=November&year=2013&skip=0&take=0
 < 200
 < Content-Type: application/json
 {
@@ -3774,7 +3774,7 @@ GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=No
     }
 }
 
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=5
+GET  /v1/Network/Analysis{?apiToken}&month=November&year=2013&skip=0&take=5
 < 200
 < Content-Type: application/json
 {
@@ -3845,7 +3845,7 @@ GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=No
     }
 }
 
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=5&origin=MiddleEast
+GET  /v1/Network/Analysis{?apiToken}&month=November&year=2013&skip=0&take=5&origin=MiddleEast
 < 200
 < Content-Type: application/json
 {
