@@ -3643,7 +3643,7 @@ Returns the detailed flight information for a given month, optionally by origin
         * `FlightsChange`: the difference between last year and this year
 
 --
-GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=5
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=0
 < 200
 < Content-Type: application/json
 {
@@ -3754,6 +3754,77 @@ GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=No
     		    "DestinationCode":"PEG",
     		    "DestinationCountry":"Italy",
     		    "DestinationContinent":"Europe",
+    		    "FlightsPrevYear":12,
+    		    "FlightsThisYear":10,
+    		    "FlightsChange":-2
+    		},
+    		{
+    		    "CarrierCode":"4H", 
+    		    "OriginCode":"CAI",
+    		    "OriginCountry":"Egypt",
+    		    "OriginContinent":"Africa",
+    		    "DestinationCode":"PEG",
+    		    "DestinationCountry":"Italy",
+    		    "DestinationContinent":"Europe",
+    		    "FlightsPrevYear":12,
+    		    "FlightsThisYear":10,
+    		    "FlightsChange":-2
+    		}
+        ]
+    }
+}
+
+GET  /v1/Network/Analysis?apiToken=00000000-0000-0000-0000-000000000001&month=November&year=2013&skip=0&take=5
+< 200
+< Content-Type: application/json
+{
+    "Networks": {
+        "Total":198,
+        "Results": [
+            {
+    		    "CarrierCode":"2P", 
+    		    "OriginCode":"DXB",
+    		    "OriginCountry":"United Arab Emirates",
+    		    "OriginContinent":"Middle East",
+    		    "DestinationCode":"MNL",
+    		    "DestinationCountry":"Phillipines",
+    		    "DestinationContinent":"Asia",
+    		    "FlightsPrevYear":0,
+    		    "FlightsThisYear":17,
+    		    "FlightsChange":17
+    		},
+    		{
+    		    "CarrierCode":"4D", 
+    		    "OriginCode":"LHX",
+    		    "OriginCountry":"England",
+    		    "OriginContinent":"Europe",
+    		    "DestinationCode":"MNL",
+    		    "DestinationCountry":"Phillipines",
+    		    "DestinationContinent":"Asia",
+    		    "FlightsPrevYear":3,
+    		    "FlightsThisYear":10,
+    		    "FlightsChange":7
+    		},
+    		{
+    		    "CarrierCode":"4H", 
+    		    "OriginCode":"CAI",
+    		    "OriginCountry":"Egypt",
+    		    "OriginContinent":"Africa",
+    		    "DestinationCode":"PEG",
+    		    "DestinationCountry":"Italy",
+    		    "DestinationContinent":"Europe",
+    		    "FlightsPrevYear":12,
+    		    "FlightsThisYear":10,
+    		    "FlightsChange":-2
+    		},
+    		{
+    		    "CarrierCode":"4P", 
+    		    "OriginCode":"CAI",
+    		    "OriginCountry":"Egypt",
+    		    "OriginContinent":"Africa",
+    		    "DestinationCode":"DXB",
+    		    "DestinationCountry":"United Arab Emirates",
+    		    "DestinationContinent":"Middle East",
     		    "FlightsPrevYear":12,
     		    "FlightsThisYear":10,
     		    "FlightsChange":-2
