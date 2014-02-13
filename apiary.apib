@@ -3025,9 +3025,13 @@ Gets reports based on the request
 * `Reports` : A collection of the lead reports
     * `Title` :  the title of the report
     * `PublishedDate` :  the published date of the report
+	* `Overview` : A brief description of the report
     * `Assets` :  A collection of assets relating to the report, this can be a pdf and/or xls document or empty
         * `AssetFileType` :  The asset file type , this is either `Pdf`,`Xls`,`Xlsx`,`Jpg`,`Jpeg`,`Jpe`,`Png` or `Bmp`
         * `Location` :  The resource location of the asset, if the user does not have entitlement to the asset then this will be `null`
+	* `CoverImage` : A picture of the front cover of the report
+        * `AssetFileType` :  The asset file type , this is either `Jpg`,`Jpeg`,`Jpe`, or `Png`
+        * `Location` :  The resource location of the asset
 
 --
 GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=Lead&skip=0&take=10
@@ -3038,6 +3042,7 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
         {
             "Title": "DevSreeTest3",
             "PublishDate": "2013-06-19T00:00:00",
+			"Overview": "A description of this report",
             "Assets": [
                 {
                     "AssetFileType": "Xlsx",
@@ -3047,11 +3052,17 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
                     "AssetFileType": "Jpeg",
                     "Location": "http://pro.flightglobal.com/Uploads/images/sh1.jpeg"
                 }
-            ]
+            ],
+			"CoverImageUrl":
+			{
+				"AssetFileType": "Jpg",
+				"Location": "http://pro.flightglobal.com/Uploads/images/sh1.jpeg"
+			}
         },
         {
             "Title": "DevSreeTest",
             "PublishDate": "2013-06-18T00:00:00",
+			"Overview": "A brief description of this report",
             "Assets": [
                 {
                     "AssetFileType": "Pdf",
@@ -3061,11 +3072,17 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
                     "AssetFileType": "Jpg",
                     "Location": "http://pro.flightglobal.com/Uploads/images/ImageTest.jpg"
                 }
-            ]
+            ],
+			"CoverImageUrl":
+			{
+				"AssetFileType": "Jpg",
+				"Location": "http://pro.flightglobal.com/Uploads/images/ImageTest.jpg"
+			}
         },
         {
             "Title": "DevSreeTest2",
             "PublishDate": "2013-06-18T00:00:00",
+			"Overview": "A slightly longer description of this report",
             "Assets": [
                 {
                     "AssetFileType": "Xlsx",
@@ -3075,11 +3092,17 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
                     "AssetFileType": "Jpg",
                     "Location": "http://pro.flightglobal.com/Uploads/images/Naturalbackground.jpg"
                 }
-            ]
+            ],
+			"CoverImageUrl":
+			{
+				"AssetFileType": "Jpg",
+				"Location": "http://pro.flightglobal.com/Uploads/images/Naturalbackground.jpg"
+			}
         },
         {
             "Title": "World Airline Rankings 2012",
             "PublishDate": "2013-06-03T14:29:00",
+			"Overview": "This report has many assets.",
             "Assets": [
                 {
                     "AssetFileType": "Pdf",
@@ -3101,11 +3124,17 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
                     "AssetFileType": "Jpg",
                     "Location": "http://pro.flightglobal.com/Uploads/images/Koala.jpg"
                 }
-            ]
+            ],
+			"CoverImageUrl":
+			{
+				"AssetFileType": "Jpg",
+				"Location": "http://pro.flightglobal.com/Uploads/images/AFReport2013(165x122).jpg"
+			}
         },
         {
             "Title": "ACE Air Cargo",
             "PublishDate": "2013-06-03T14:27:00",
+			"Overview": "A report about ACE Air Cargo.",
             "Assets": [
                 {
                     "AssetFileType": "Pdf",
@@ -3127,12 +3156,15 @@ GET /v1/reports/search?apiToken=00000000-0000-0000-0000-000000000001&reportType=
                     "AssetFileType": "Jpg",
                     "Location": "http://pro.flightglobal.com/Uploads/images/AFReport2013(80x60)Thumb3.jpg"
                 }
-            ]
+            ],
+			"CoverImageUrl":
+			{
+				"AssetFileType": "Jpg",
+				"Location": "http://pro.flightglobal.com/Uploads/images/Desert.jpg"
+			}
         }
     ]
 }
-
-
 
 --
 /Enrich/Text
